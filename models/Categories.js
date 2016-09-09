@@ -1,9 +1,9 @@
 var queryHelper = require('../helpers/query-helper');
 
 
-function User() {
+function Category() {
 
-  this.tableName = 'users';
+  this.tableName = 'categories';
 
   //METHOD FOR GETTING ALL USERS
   this.get = queryHelper.get;
@@ -22,4 +22,4 @@ function User() {
 
 }
 
-module.exports = new User();
+module.exports = new Category();

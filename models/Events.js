@@ -1,9 +1,8 @@
 var queryHelper = require('../helpers/query-helper');
 
+function Event() {
 
-function User() {
-
-  this.tableName = 'users';
+  this.tableName = 'events';
 
   //METHOD FOR GETTING ALL USERS
   this.get = queryHelper.get;
@@ -22,4 +21,4 @@ function User() {
 
 }
 
-module.exports = new User();
+module.exports = new Event();

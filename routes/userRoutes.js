@@ -4,6 +4,9 @@ module.exports = function(router) {
   router.get('/users/', function(req, res) {
     User.get(res);
   });
+  router.get('/users/:id', function(req, res) {
+    User.getById(req.params.id,res);
+  });
 
   router.post('/users/', function(req, res) {
     User.create(req.body, res);
