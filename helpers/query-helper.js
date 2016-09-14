@@ -3,7 +3,6 @@ var connection = require('../connection');
 module.exports = {
   get: function(res) {
     var tablename = this.tableName;
-    console.log(tablename);
     connection.acquire(function(err, con) {
       con.query('select * from ' + tablename, function(err, result) {
         con.release();
@@ -14,7 +13,6 @@ module.exports = {
 
   getById: function(id,res) {
     var tablename = this.tableName;
-    console.log(tablename);
     connection.acquire(function(err, con) {
       con.query('select * from ' + tablename + ' where id = ?', [id], function(err, result) {
         con.release();
@@ -25,7 +23,6 @@ module.exports = {
 
   create: function(model, res) {
     var tablename = this.tableName;
-    console.log(tablename);
     connection.acquire(function(err, con) {
       con.query('insert into ' + tablename + ' set ?', model, function(err, result) {
         con.release();
@@ -40,7 +37,6 @@ module.exports = {
 
   update: function(model, res) {
     var tablename = this.tableName;
-    console.log(tablename);
     connection.acquire(function(err, con) {
       con.query('update ' + tablename + ' set ? where id = ?', [model, model.id], function(err, result) {
         con.release();

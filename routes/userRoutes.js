@@ -8,6 +8,10 @@ module.exports = function(router) {
     User.getById(req.params.id,res);
   });
 
+  router.get('/users/getCategories/:id/', function(req, res) {
+    User.getUserCategories(req.params.id, res);
+  });
+
   router.post('/users/', function(req, res) {
     User.create(req.body, res);
   });

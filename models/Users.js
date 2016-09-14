@@ -1,5 +1,7 @@
 var queryHelper = require('../helpers/query-helper');
 
+var connection = require('../connection');
+
 
 function User() {
 
@@ -19,6 +21,18 @@ function User() {
 
   //METHOD FOR DELETING A USER
   this.delete = queryHelper.delete;
+
+  //METHOD FOR GETTING A USERS PREFERRED CATEGORIES
+  this.getUserCategories = function(id,res) {
+    connection.acquire(function(err, con) {
+      var query = 'select c.id as category_id,c.category_name from user_categories uc inner join categories c ON(uc.category_id = c.id) where uc.user_id = ?';
+
+      con.query(query, [id], function(err, result) {
+        con.release();
+        res.send(result);
+      });
+    });
+  };
 
 }
 
