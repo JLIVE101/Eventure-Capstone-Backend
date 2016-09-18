@@ -1,6 +1,6 @@
 var Bookshelf  = require('../database').getBookShelf();
 var Category   = require('../models/Category');
-var _ = require('lodash');
+var _          = require('lodash');
 var Categories = Bookshelf.Collection.extend({
   model: Category
 });
@@ -8,8 +8,12 @@ var Categories = Bookshelf.Collection.extend({
 module.exports = function(router) {
 
   //fetch all categories
-  router.get('/categories/', function(req, res) {
-    Categories.forge()
+  router.get('/categories', function(req, res) {
+    Categories.query(function (qb) {
+      //if name is sent as a parameter
+      if(req.query.name)
+        qb.where('name', 'like', '%' + req.query.name + '%');
+    })
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -19,9 +23,11 @@ module.exports = function(router) {
     });
   });
 
-  //fetch specific category
+  //fetch all categories
   router.get('/categories/:id', function(req, res) {
-    Category.forge({"id" : req.params.id})
+    Category.forge({
+      "id" : req.params.id
+    })
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -30,6 +36,7 @@ module.exports = function(router) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
+
   /*
 
   router.post('/categories/', function(req, res) {
