@@ -1,10 +1,17 @@
 {
-    "client": "mysql",
-    "connection": {
-        "host"     : "localhost",
-        "user"     : "master",
-        "password" : "HRmz7JdY",
-        "database" : "eventure_db",
-        "charset"  : "utf8"
-  }
+	"db":
+	{
+		"client": "mysql",
+		"connection":
+		{
+			"host": "localhost",
+			"user": "master_slithery",
+			"password": "HRmz7JdY",
+			"database": "eventure_db",
+			"charset": "utf8"
+		}
+	},
+	"passport" : {
+
+	}
 }

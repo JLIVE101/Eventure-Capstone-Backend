@@ -1,5 +1,5 @@
-var config = require('./config');
-var knex = require('knex')(config);
+var config = require('../config');
+var knex = require('knex')(config.db);
 var Schema = require('./schema');
 var sequence = require('when/sequence');
 var _ = require('lodash');

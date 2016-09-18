@@ -1,0 +1,12 @@
+//get express app object
+var app = require('../app');
+
+//set the port number
+var port = process.env.PORT || 9000;
+
+
+//start the server
+var server = app.listen(port , function(){
+  //print out server port in console.
+  console.log('API Server listening on port ' + server.address().port);
+});

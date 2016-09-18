@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
 
+/*
 //authenticate a user
 router.post('/authenticate', function(req,res,next){
   res.json({api_key: ''});
@@ -16,13 +17,13 @@ router.post('/newUser', function(req,res,next){
   var salt = bcrypt.genSaltSync(10);
   // Salt and hash password
   var passwordToSave = bcrypt.hashSync(params.password, salt);
-  
 
-});
+
+}); */
 
 //ROUTES FOR ALL MODELS
-require('./userRoutes')(router);
-require('./eventRoutes')(router);
+//require('./userRoutes')(router);
+//require('./eventRoutes')(router);
 require('./categoryRoutes')(router);
 
 
