@@ -1,4 +1,4 @@
-var User = require('../models/Users');
+var User = require('../Controllers/UserController');
 
 module.exports = function(router) {
   router.get('/users/', function(req, res) {

@@ -1,4 +1,4 @@
-var Category = require('../models/Categories');
+var Category = require('../Controllers/CategoryController');
 
 module.exports = function(router) {
   router.get('/categories/', function(req, res) {

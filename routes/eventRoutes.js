@@ -1,4 +1,4 @@
-var Event = require('../models/Events');
+var Event = require('../Controllers/EventController');
 
 module.exports = function(router) {
   router.get('/events/', function(req, res) {
