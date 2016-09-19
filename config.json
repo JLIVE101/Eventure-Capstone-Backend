@@ -12,6 +12,9 @@
 		}
 	},
 	"passport" : {
-
+		"secret" : "7H1515S053Cr37tH4TN080DYw1lL6E7TH1s"
+	},
+	"jwt" : {
+		"secret" : "Ul71M4tePoW3R0F76R3AT3573veR"
 	}
 }
