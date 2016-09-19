@@ -3,7 +3,7 @@ var Schema = {
     id                  : {type: 'increments', nullable: false, primary : true},
     email               : {type: 'string', maxlength   : 254, nullable  : true, unique: true},
     username            : {type: 'string', maxlength   : 14, nullable   : true, unique: true},
-    password            : {type: 'string', maxlength   : 24, nullable   : true},
+    password            : {type: 'string', maxlength   : 254, nullable   : true},
     first_name          : {type: 'string', maxlength   : 150, nullable  : true},
     last_name           : {type: 'string', maxlength   : 150, nullable  : true},
     phone_number        : {type: 'integer', unsigned   : true, nullable : true},
@@ -29,14 +29,14 @@ var Schema = {
     html_description: {type: 'text', maxlength     : 16777215, fieldtype: 'medium', nullable: false},
     user_id         : {type: 'integer', nullable   : false, unsigned    : true, references:'users.id'},
     start_date      : {type: 'dateTime', nullable  : false},
-    end_date        : {type: 'dateTime', nullable  : true},
+    end_date        : {type: 'dateTime', nullable  : false},
     created_at      : {type: 'dateTime', nullable  : false},
     updated_at      : {type: 'dateTime', nullable  : true}
 
   },
   categories: {
     id  : {type: 'increments', nullable: false, primary : true},
-    name: {type: 'string', maxLength   : 55, nullable   : false}
+    name: {type: 'string', maxLength   : 55, nullable   : false, unique: true}
   },
   events_comments: {
     id          : {type: 'increments', nullable: false, primary     : true},
