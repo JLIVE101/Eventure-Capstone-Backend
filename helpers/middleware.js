@@ -1,14 +1,14 @@
 var jwt          = require('jsonwebtoken');
 var config       = require('../config');
-var dateFormat   = require('dateformat');
 ACCEPTED_DOMAINS = ["localhost","jlive.me"];
 
 
 module.exports = {
 
+
   //check if user is an admin
   isAdmin : function(req, res, next) {
-    var user = req.user || req.decoded; //store user variable
+    var user = req.user; //store user variable
 
     //if user is admin go to next route
     if(user.admin === 1)
@@ -16,48 +16,30 @@ module.exports = {
 
     //user is not admin send message
     res.send({
-      error: "sorry this endpoint requires admin privileges"
+      success: false,
+      message: "sorry this endpoint requires admin privileges"
     });
     return;
 
 
   },
 
-  //parse any date fields send through req.body or query
-  parseDateFields: function (req, res, next) {
-    var obj = {};
+  //check if a user is logged in and has a session with passportJS
+  isLoggedIn : function (req, res, next) {
 
-    if(req.method === "GET") {
-      obj = req.query;
-    } else {
-      obj = req.body;
-    }
+    if(req.isAuthenticated())
+      return next();
 
-    Date.prototype.isValid = function () {
-      // An invalid date object returns NaN for getTime() and NaN is the only
-      // object not strictly equal to itself.
-      return this.getTime() === this.getTime();
-    };
-    //loop through data params and parse any fields that have `date` into a javascript date
-    for(var key in obj) {
-      if(key.indexOf("date") > 0) {
-        if(((new Date(obj[key]))).isValid())
-          obj[key] = new Date(obj[key]);
-        else
-          return res.send({success: false, message: key + " is an invalid date"});
-      }
-      console.log("\n\n\n\n\n"+dateFormat(req.query.start_date,'yyyy-mm-d')+"\n\n\n\n");
-      
+    return res.status(500).json({success: false, message: "You need to be logged in at http://www.eventure.com"});
 
-    }
-    next();
   },
 
   //function to block unwanted domains
   rejectUnwantedDomains : function(req, res, next) {
     if(ACCEPTED_DOMAINS.indexOf(req.hostname) < 0) {
       res.send({
-        error: "sorry this domain is not accepted"
+        success: false,
+        message: "sorry this domain is not accepted"
       });
       return;
     } else {
@@ -94,5 +76,18 @@ module.exports = {
 			});
 		}
 	},
+
+  //check if the User is the same user, used when someone tries to edit user profiles
+  verifyUser : function (req, res, next) {
+    var id = Number(req.params.id); //grab id from url
+    var user = req.user; //store user variable
+
+    //check if user is the same user performing the action of the endpoint
+    if(user.id === id)
+      return next();
+
+    //may want to store user details who performed this action so we know if someone is trying to do something malicious
+    return res.status(500).json({success: false, message: "You do not have the privileges to perform this action"});
+  },
 
 };

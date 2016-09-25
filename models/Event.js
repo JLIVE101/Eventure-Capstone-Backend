@@ -1,16 +1,37 @@
 var Bookshelf = require('../database').getBookShelf();
-var User = require('./User');
+Bookshelf.plugin('registry');
+var User      = require('./User');
+var Comment   = require('./Comment');
+var Category  = require('./Category');
+var Rating    = require('./Rating');
+
+
 
 var Event = Bookshelf.Model.extend({
   tableName: 'events',
 
   hasTimestamps: true,
 
-  user: function() {
-    return this.belongsTo(User, 'user_id');
-  }
+  owner: function() {
+    return this.belongsTo('User', 'user_id');
+  },
 
+  users: function () {
+    return this.belongsToMany('User','users_events','event_id','user_id');
+  },
+
+  categories: function () {
+    return this.belongsToMany('Category','events_categories','event_id','category_id');
+  },
+
+  comments: function() {
+    return this.hasMany('Comment', 'event_id');
+  },
+
+  ratings: function() {
+    return this.hasMany('Rating', 'event_id');
+  },
 
 });
 
-module.exports = Event;
+module.exports = Bookshelf.model('Event', Event);

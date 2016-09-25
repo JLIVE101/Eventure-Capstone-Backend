@@ -4,7 +4,7 @@ var bcrypt  = require('bcryptjs');
 var mw      = require('../helpers/middleware');
 
 //set global api middleware
-router.route('/*').all(mw.parseDateFields);
+//router.route('/*').all(mw.parseDateFields);
 
 
 //ROUTES FOR ALL MODELS
