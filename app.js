@@ -7,7 +7,6 @@ var express      = require('express');
 var app          = express();
 var port         = process.env.PORT || 9000;
 var passport     = require('passport');
-var flash        = require('connect-flash');
 var mw           = require('./helpers/middleware');
 
 var apiRoutes    = require('./routes/api');
@@ -15,6 +14,8 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyparser   = require('body-parser');
 var session      = require('express-session');
+
+// TODO : SETUP MONGODB FOR COMMENTS BETWEEN USERS
 
 
 
@@ -34,7 +35,6 @@ app.use(bodyparser.json());
 app.use(session({ secret: config.passport.secret })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
 require('./passport/index')(passport);
 
 
