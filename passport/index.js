@@ -53,22 +53,26 @@ module.exports = function(passport) {
         .then(function (user) {
           if(user) {
             //user already exists
-            return done(null, false, {'error': 'That username is already taken.'});
+            return done(null, false, {success:false, message: 'That username is already taken.'});
           } else {
             //user doesnt exist and no errors happens
 
             //check to see if all required fields are set, then save else return error
-            if(username && password && req.body.email && req.body.first_name && req.body.last_name) {
+            if(username && password && req.body.email && req.body.first_name && req.body.last_name && req.body.gender && req.body.date_of_birth) {
               User.forge({
-                "username"     : username,
-                "password"     : bcrypt.hashSync(password, bcrypt.genSaltSync(10), null), //generate hash
-                "email"        : req.body.email,
-                "first_name"   : req.body.first_name,
-                "last_name"    : req.body.last_name,
-                "phone_number" : req.body.phone_number || "" //replace phone # with empty string if null
+                "gender"          : req.body.gender,
+                "date_of_birth"   : req.body.date_of_birth,
+                "username"        : username,
+                "password"        : bcrypt.hashSync(password, bcrypt.genSaltSync(10), null), //generate hash
+                "email"           : req.body.email,
+                "first_name"      : req.body.first_name,
+                "last_name"       : req.body.last_name,
+                "primary_account" : "local",
+                "phone_number"    : req.body.phone_number || "" //replace phone # with empty string if null
               })
               .save()
               .then(function(newUser){
+
                 return done(null, newUser);
               })
               //if an error happens when saving the user
@@ -77,13 +81,13 @@ module.exports = function(passport) {
               });
             } else {
               //not all fields were sent
-              return done(null, false, {'error' : 'All required fields must be filled out.'});
+              return done(null, false, {success:false, message: 'All required fields must be filled out.'});
             }
           }
         })
         //if an error happens when searching for the user
         .catch(function (err) {
-          return done(err);
+          return done(err.message);
         });
 
       });
@@ -105,18 +109,18 @@ module.exports = function(passport) {
         .then(function(user){
           // if no user is found, return the message
           if(!user)
-            return done(null,false, {"error" : "No user found with the name: " + username});
+            return done(null,false, {success:false, message: "No user found with the name: " + username});
 
           // if the user is found but the password is wrong
           if(!(bcrypt.compareSync(password, user.attributes.password.toString())))
-            return done(null, false, {"error" : "Oops! Wrong password."});
+            return done(null, false, {success:false, message: "Oops! Wrong password."});
 
           // all is well, return successful user
           return done(null, user.attributes);
         })
         .catch(function(err){
           // if there are any errors, return the error before anything else
-          return done(err);
+          return done(err.message);
         });
     }));
 
