@@ -16,6 +16,7 @@ var bodyparser   = require('body-parser');
 var session      = require('express-session');
 
 // TODO : SETUP MONGODB FOR COMMENTS BETWEEN USERS
+// TODO : SETUP SOCKET SERVER
 
 
 
