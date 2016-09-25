@@ -18,13 +18,14 @@ module.exports = function(app, passport) {
       //if an error happaned during registration process
       if( !user )
         return res.send(401, info);
-      //log the user in
+
       req.login(user, function (err) {
         if(err)
           return next(err);
 
         //delete password for security reasons
         delete user.password;
+        delete user.admin;
         //create token
         var token = jwt.sign(user, app.get("jwt-secret"), {
           "expiresIn" : 60*60*24 // expires in 24 hours
@@ -32,7 +33,7 @@ module.exports = function(app, passport) {
 
         return res.send({
           success: true,
-          credentials: {
+          data: {
             //user: user,
             token: token
           }
@@ -57,6 +58,7 @@ module.exports = function(app, passport) {
 
         //delete password for security reasons
         delete user.password;
+        delete user.admin;
         //create jsonwebtoken
         var token = jwt.sign(user, app.get("jwt-secret"), {
           "expiresIn" : 60*60*24 // expires in 24 hours
@@ -81,7 +83,7 @@ module.exports = function(app, passport) {
       //After clearing user object in session send back a null user
       //clear any jsonwebtokens
       res.send({
-        user: "im a null user"
+        user: null
       });
   });
 

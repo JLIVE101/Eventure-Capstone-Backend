@@ -1,9 +1,13 @@
 var Bookshelf  = require('../../database').getBookShelf();
+Bookshelf.plugin('registry');
 var Category   = require('../../models/Category');
 var mw         = require('../../helpers/middleware'); //load api middleware function
 var Categories = Bookshelf.Collection.extend({
   model: Category
 });
+
+// TODO : add documentation for all routes for categoryRoutes
+
 
 
 module.exports = function(router) {
