@@ -1,0 +1,18 @@
+INSERT INTO `categories` (`id`,`name`) VALUES
+(1,'Outdoors'),
+(2,'Gaming'),
+(3,'Sports'),
+(4,'Fitness'),
+(5,'Education'),
+(6,'Community'),
+(7,'Technology'),
+(8,'Art'),
+(9,'Business'),
+(10,'Music'),
+(11,'Film & Media'),
+(12,'Fashion'),
+(13,'Spirituality'),
+(14,'Hobbies'),
+(15,'Casual'),
+(16,'Convention'),
+(17,'Food & Drink');
