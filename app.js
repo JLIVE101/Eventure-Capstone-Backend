@@ -14,7 +14,6 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyparser   = require('body-parser');
 var session      = require('express-session');
-
 // TODO : SETUP MONGODB FOR COMMENTS BETWEEN USERS
 // TODO : SETUP SOCKET SERVER
 
@@ -23,9 +22,17 @@ var session      = require('express-session');
 // =======================
 // configuration =========
 // =======================
+
 app.set('jwt-secret', config.jwt.secret); // secret variable
 app.set('port', port);
 
+// allow cross origin requests
+app.all("/api/v1/*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    return next();
+});
 // use body parser so we can get info from POST and/or URL parameters
 app.use(morgan('dev'));
 app.use(cookieParser());
