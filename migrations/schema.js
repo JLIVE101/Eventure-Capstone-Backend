@@ -1,8 +1,8 @@
 var Schema = {
   users: {
     id                  : {type: 'increments', nullable: false, primary : true},
-    gender              : {type: 'string', nullable    : false},
-    date_of_birth       : {type: 'date', nullable      : false},
+    gender              : {type: 'string', nullable    : true},
+    date_of_birth       : {type: 'date', nullable      : true},
     email               : {type: 'string', maxlength   : 254, nullable  : true, unique: true},
     username            : {type: 'string', maxlength   : 14, nullable   : true, unique: true},
     password            : {type: 'string', maxlength   : 254, nullable  : true},
