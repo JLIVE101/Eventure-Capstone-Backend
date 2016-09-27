@@ -1,0 +1,550 @@
+{
+	"id": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+	"name": "Capstone Eventure Backend API",
+	"description": "Collection for hitting endpoints for capstone api",
+	"order": [
+		"7304e960-de48-058e-88e5-27998e673aa9",
+		"501c530d-1e6c-3d92-6ab6-c2625e60cbe6",
+		"b55cdc1c-ac88-286c-3ada-e9faf0038b8b",
+		"bb2e6c18-d880-4c8f-b42b-90e099e666a3",
+		"b4c8f933-1af4-05d9-444f-ccb5f063af20",
+		"daf544b3-a540-96a1-c2bb-05776bec4509",
+		"021f5e9b-e52c-50cc-ef54-cef20aea1cd8",
+		"befef535-d863-b285-f07c-f75cf973e46f",
+		"4cbf0cc3-5531-f49e-f46b-aae8f18a7f17",
+		"aa7fd247-f807-0817-7942-106f5ad2ab77",
+		"8ac18b18-2b3b-6c7b-8af1-0ad766700786",
+		"03647215-da77-e43c-fd59-a9fe96784efd",
+		"2046aec0-7693-5e9a-b245-4971934339e4",
+		"cf603d94-1e96-3dae-50a2-9e4660614f4f",
+		"4d4cfdd2-096f-5280-0840-ba19e4f01e31",
+		"9f2eaa32-4449-a8e2-18d7-ce5c6b51427d"
+	],
+	"folders": [],
+	"timestamp": 1474474279409,
+	"owner": "431492",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "021f5e9b-e52c-50cc-ef54-cef20aea1cd8",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\n",
+			"url": "localhost:9000/api/v1/users/1/events?name",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474786983507,
+			"name": "Get User Created Events",
+			"description": "Get user events",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "03647215-da77-e43c-fd59-a9fe96784efd",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\nContent-Type: application/x-www-form-urlencoded\n",
+			"url": "localhost:9000/api/v1/events/leave/3",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [],
+			"dataMode": "urlencoded",
+			"name": "Leave Event",
+			"description": "Leave event",
+			"descriptionFormat": "html",
+			"time": 1474800139628,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "2046aec0-7693-5e9a-b245-4971934339e4",
+			"headers": "Content-Type: application/x-www-form-urlencoded\nx-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjo1OTozMi4wMDBaIiwiaWF0IjoxNDc0Nzg4OTU4LCJleHAiOjE0NzQ4NzUzNTh9.CBA6Tul0PYVk7odmLHOds3MTknOdhGLgEY243o-VUMg\n",
+			"url": "localhost:9000/api/v1/events/1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "name",
+					"value": "Event One ",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "description",
+					"value": "This is the description for my first event",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "start_date",
+					"value": "2016-09-20",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "end_date",
+					"value": "2016-09-21",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "categories",
+					"value": "1,2,3,4,5",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "mamacita123",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474792283869,
+			"name": "Update Event",
+			"description": "",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "4cbf0cc3-5531-f49e-f46b-aae8f18a7f17",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\n",
+			"url": "localhost:9000/api/v1/users/1/categories",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "categories",
+					"value": "1,2,3,4,5,6",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474788952707,
+			"name": "Add User categories",
+			"description": "Add User categories",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "4d4cfdd2-096f-5280-0840-ba19e4f01e31",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "localhost:9000/api/v1/events/1/categories/remove",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "category_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474792430090,
+			"name": "Remove Category From Event",
+			"description": "",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "501c530d-1e6c-3d92-6ab6-c2625e60cbe6",
+			"headers": "",
+			"url": "localhost:9000/local_signup",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [
+				{
+					"key": "username",
+					"value": "JLIVEog",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "joshuawilliams1990@hotmail.co.uk",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "first_name",
+					"value": "Joshua",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "last_name",
+					"value": "Williams",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone_number",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "gender",
+					"value": "male",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_of_birth",
+					"value": "1994-01-31",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Local Signup 2",
+			"description": "Signup 2",
+			"descriptionFormat": "html",
+			"time": 1474792740980,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "7304e960-de48-058e-88e5-27998e673aa9",
+			"headers": "",
+			"url": "localhost:9000/local_signup",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "username",
+					"value": "JLIVE",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "jwilliams199055@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "first_name",
+					"value": "Joshua",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "last_name",
+					"value": "Williams",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone_number",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "gender",
+					"value": "male",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_of_birth",
+					"value": "1994-01-31",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474530162775,
+			"name": "Local Signup",
+			"description": "Signup",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "8ac18b18-2b3b-6c7b-8af1-0ad766700786",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\nContent-Type: application/x-www-form-urlencoded\n",
+			"url": "localhost:9000/api/v1/events/join/3",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474799218921,
+			"name": "Join Event",
+			"description": "Join event",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "9f2eaa32-4449-a8e2-18d7-ce5c6b51427d",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\n",
+			"url": "localhost:9000/api/v1/categories?name=",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474785611311,
+			"name": "Get All Categories",
+			"description": "Get categories",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "aa7fd247-f807-0817-7942-106f5ad2ab77",
+			"headers": "Content-Type: application/x-www-form-urlencoded\nx-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA0OjI2OjI3LjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNDoyNjoyNy4wMDBaIiwiaWF0IjoxNDc0NzgwODM2LCJleHAiOjE0NzQ4NjcyMzZ9.8jnEx1Cv8M3IaVBzvMvmGcqLRsYWpnx3H27pyGwQq8o\n",
+			"url": "localhost:9000/api/v1/events/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "Event Three",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "description",
+					"value": "This is the description for my first event for user 2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "start_date",
+					"value": "2016-09-20",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "end_date",
+					"value": "2016-09-21",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "categories",
+					"value": "1,2,3,4,5",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474799060245,
+			"name": "Create Event",
+			"description": "must pass token",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "b4c8f933-1af4-05d9-444f-ccb5f063af20",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjo1OTozMi4wMDBaIiwiaWF0IjoxNDc0Nzk2MjM0LCJleHAiOjE0NzQ4ODI2MzR9.9IIguZrJ8jFRe_cdTYloIgBY5mbXD8jTvWizKy4Mpuk\n",
+			"url": "localhost:9000/api/v1/users/1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474796506193,
+			"name": "Get User By Id",
+			"description": "",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "b55cdc1c-ac88-286c-3ada-e9faf0038b8b",
+			"headers": "",
+			"url": "localhost:9000/local_login",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [
+				{
+					"key": "username",
+					"value": "JLIVE",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Local Login",
+			"description": "Local Login",
+			"descriptionFormat": "html",
+			"time": 1474474701394,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "bb2e6c18-d880-4c8f-b42b-90e099e666a3",
+			"headers": "",
+			"url": "localhost:9000/local_login",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [
+				{
+					"key": "username",
+					"value": "JLIVEog",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Local Login 2",
+			"description": "Local Login 2",
+			"descriptionFormat": "html",
+			"time": 1474792770748,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "befef535-d863-b285-f07c-f75cf973e46f",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\n",
+			"url": "localhost:9000/api/v1/users/1/joinedEvents?name",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get User Joined Events",
+			"description": "Get user events",
+			"descriptionFormat": "html",
+			"time": 1474798891178,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "cf603d94-1e96-3dae-50a2-9e4660614f4f",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "localhost:9000/api/v1/events/1/categories/add",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "category_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474792425603,
+			"name": "Add Category to Event",
+			"description": "",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		},
+		{
+			"id": "daf544b3-a540-96a1-c2bb-05776bec4509",
+			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\n",
+			"url": "localhost:9000/api/v1/users/1/categories?name=",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1474785631865,
+			"name": "Get User Categories",
+			"description": "Get user categories",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"responses": []
+		}
+	]
+}
