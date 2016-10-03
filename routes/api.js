@@ -11,6 +11,8 @@ var mw      = require('../helpers/middleware');
 require('./apiRoutes/userRoutes')(router);
 require('./apiRoutes/eventRoutes')(router);
 require('./apiRoutes/categoryRoutes')(router);
+require('./apiRoutes/commentRoutes')(router);
+
 
 
 

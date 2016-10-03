@@ -3,6 +3,7 @@ Bookshelf.plugin('registry');
 var bcrypt     = require('bcrypt-nodejs');
 var Event      = require('../../models/Event');
 var User       = require('../../models/User');
+var Comment    = require('../../models/Comment');
 var mw         = require('../../helpers/middleware');
 var Events     = Bookshelf.Collection.extend({
   model: Event
@@ -15,7 +16,7 @@ module.exports = function(router) {
   router.route('/events')
 
   //fetch all events
-  .get(mw.verifyToken, function(req, res) {
+  .get(function(req, res) {
     Events.query(function (qb) {
       if(req.query.name)
         qb.where('name', 'like', '%' + req.query.name + '%');
@@ -58,8 +59,6 @@ module.exports = function(router) {
       password        : req.body.password || null,
       picture_url     : req.body.picture_url || null,
       address         : req.body.address || null,
-      longitude       : req.body.longitude || null,
-      latitude        : req.body.latitude || null,
       saved           : req.body.saved || false,
 
 
@@ -110,8 +109,6 @@ module.exports = function(router) {
         password        : (req.body.password) ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : event.get('password'),
         picture_url     : req.body.picture_url || event.get('picture_url'),
         address         : req.body.address || event.get('address'),
-        longitude       : req.body.longitude || event.get('longitude'),
-        latitude        : req.body.latitude || event.get('latitude'),
         saved           : req.body.saved || event.get('saved'),
         private         : req.body.private || event.get('private'),
       })
@@ -301,4 +298,36 @@ module.exports = function(router) {
             res.status(500).json({success: false, message: err.message});
           });
       });
+
+      router.route("/events/:id/comments")
+      //get all comments for event
+        .get(function (req, res, next) {
+          Comment.forge({"event_id" : req.params.id})
+          .fetchAll()
+          .then(function (comments) {
+            res.json({success: true, data: comments});
+          })
+          .catch(function (err) {
+            res.status(500).json({success: false, message: err.message});
+          });
+        })
+        //create comment for event
+        .post(function (req, res, next) {
+          Comment.forge({
+            html_comment: req.body.comment,
+            user_id: req.user.id,
+            event_id: req.params.id,
+            likes: 0
+          })
+          .save()
+          .then(function (comment) {
+            res.json({success: true, data: comment});
+          })
+          .catch(function (err) {
+            res.status(500).json({success: false, message: err.message});
+          });
+        });
+
+
+
 };

@@ -1,11 +1,17 @@
 // load all the things we need
-var LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy    = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy  = require('passport-twitter').Strategy;
+var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User          = require('../models/User');
+var User   = require('../models/User');
 
 // load bcrypt for hashing passwords
-var bcrypt        = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt-nodejs');
+
+// load config file for social media strategies
+var config = require('../config');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -125,4 +131,56 @@ module.exports = function(passport) {
     }));
 
 
+
+    // =========================================================================
+    // FACEBOOK ================================================================
+    // =========================================================================
+    passport.use(new FacebookStrategy({
+
+        // pull in our app id and secret from our config.json file
+        clientID        : config.passport.facebookAuth.clientID,
+        clientSecret    : config.passport.facebookAuth.clientSecret,
+        callbackURL     : config.passport.facebookAuth.callbackURL
+
+    },
+    // facebook will send back the token and profile
+    function(token, refreshToken, profile, done) {
+      // asynchronous
+      process.nextTick(function() {
+
+        // find the user in the database based on their facebook id
+        User.forge({"facebook_id" : profile.id})
+        .fetch()
+        .then(function (user) {
+
+          // if the user is found, then log them in
+          if (user)
+            return done(null, user);
+            console.log(profile);
+            User.forge({
+              // set all of the facebook information in our user model
+              "facebook_id"    : profile.id, // set the users facebook id
+              "facebook_token" : token, // we will save the token that facebook provides to the user
+              "facebook_name"  : (profile.name.givenName && profile.name.familyName) ? profile.name.givenName + ' ' + profile.name.familyName : profile.displayName, // look at the passport user profile to see how names are returned
+              "facebook_email" : (profile.emails) ? profile.emails[0].value : "no email defined", // facebook can return multiple emails so we'll take the first
+            })
+            .save()
+            .then(function (user) {
+              return done(null, newUser);
+            })
+            //if an error happens when saving the user
+            .catch(function(err){
+              return done(null, false, err);
+            });
+
+        })
+        .catch(function (err) {
+          // if there are any errors, return the error before anything else
+          return done(err.message);
+        });
+
+      });
+
+
+  }));
 };

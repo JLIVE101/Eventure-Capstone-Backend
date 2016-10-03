@@ -27,7 +27,7 @@ app.set('jwt-secret', config.jwt.secret); // secret variable
 app.set('port', port);
 
 // allow cross origin requests
-app.all("/api/v1/*", function (req, res, next) {
+app.all("*", function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
