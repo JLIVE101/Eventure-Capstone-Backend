@@ -86,7 +86,7 @@ module.exports = function(router) {
     })
     .fetch({withRelated: 'users'})
     .then(function (event) {
-      res.json({success: true, data: {event: event, users: event.related('users')}});
+      res.json({success: true, data: event.toJSON()});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
