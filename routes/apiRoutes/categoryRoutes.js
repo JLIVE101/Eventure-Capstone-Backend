@@ -21,10 +21,10 @@ module.exports = function(router) {
     })
     .fetch()
     .then(function (collection) {
-      res.json({error: false, data: collection.toJSON()});
+      res.json({success: true, data: collection.toJSON()});
     })
     .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
+      res.status(500).json({success: false, message: err.message}});
     });
   })
   //create a new category
@@ -32,10 +32,10 @@ module.exports = function(router) {
     Category.forge({ name: req.body.name })
       .save()
       .then(function (category) {
-        res.send({ error: false, data: { id: category.get('id')}});
+        res.send({ success: true, data: { id: category.get('id')}});
       })
       .catch(function (err) {
-        res.send(500,{ error: true, data: {message: err.message }});
+        res.send(500,{ success: false, message: err.message }});
       });
   });
 
@@ -46,10 +46,10 @@ module.exports = function(router) {
     })
     .fetch()
     .then(function (collection) {
-      res.json({error: false, data: collection.toJSON()});
+      res.json({success: true, data: collection.toJSON()});
     })
     .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
+      res.status(500).json({success: false, message: err.message}});
     });
   })
   //update category
@@ -59,14 +59,14 @@ module.exports = function(router) {
     .then(function (category) {
       category.save({name: req.body.name || category.get('name')})
       .then(function () {
-        res.json({error: false, data: {message: 'Category updated'}});
+        res.json({success: true, message: 'Category updated'}});
       })
       .catch(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
+        res.status(500).json({success: false, message: err.message}});
       });
     })
     .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
+      res.status(500).json({success: false, message: err.message}});
     });
   })
   //delete a category
@@ -76,14 +76,14 @@ module.exports = function(router) {
     .then(function (category) {
       category.destroy()
       .then(function () {
-        res.json({error: true, data: {message: 'Category successfully deleted'}});
+        res.json({success: false, message: 'Category successfully deleted'}});
       })
       .catch(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
+        res.status(500).json({success: false, message: err.message}});
       });
     })
     .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
+      res.status(500).json({success: false, message: err.message}});
     });
   });
 };
