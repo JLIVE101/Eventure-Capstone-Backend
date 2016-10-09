@@ -17,7 +17,7 @@ module.exports = function(router) {
 
   //get all users
   router.route('/users')
-  .get([mw.verifyToken, mw.isAdmin], function(req, res) {
+  .get([mw.isAdmin], function(req, res) {
     Users.forge()
     .fetch()
     .then(function (users) {
@@ -117,7 +117,7 @@ module.exports = function(router) {
 
   //get users categories
   router.route('/users/:id/categories')
-  .get([mw.verifyToken], function (req, res) {
+  .get( function (req, res) {
     User.forge("id", req.params.id)
     .fetch({ withRelated: [{'categories': function(qb){
         if(req.query.name)
@@ -176,7 +176,7 @@ module.exports = function(router) {
 
   //get user events
   router.route('/users/:id/createdEvents')
-  .get([mw.verifyToken], function (req, res) {
+  .get( function (req, res) {
     User.forge({ "id" : req.params.id })
     .fetch({ withRelated: [{'createdEvents' : function (qb) {
       if(req.query.name)
@@ -200,7 +200,7 @@ module.exports = function(router) {
   });
 
   router.route('/users/:id/joinedEvents')
-  .get([mw.verifyToken], function (req, res) {
+  .get(function (req, res) {
     User.forge({ "id" : req.params.id })
     .fetch({ withRelated: [{'joinedEvents' : function (qb) {
       if(req.query.name)
@@ -222,6 +222,29 @@ module.exports = function(router) {
       res.status(500).json({success: false, message: err.message});
     });
   });
+
+
+  router.route('/user/checkUsername')
+    .get(function (req, res) {
+
+
+      User.query(function (qb) {
+        qb.where({"username" : req.query.username});
+      })
+      .fetch()
+      .then(function (user) {
+        console.log(user);
+        //if a user is found with that username then return false
+        if(user)
+          return res.send(true);
+        //else return true
+        return res.send(false);
+      })
+      .catch(function(err){
+        res.json({success: false, message: err.message});
+      });
+
+    });
 
 
 

@@ -4,6 +4,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy  = require('passport-twitter').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
+
 // load up the user model
 var User   = require('../models/User');
 
@@ -24,15 +25,18 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+
+        done(null, user);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-      User.forge({ "id" : id})
+    passport.deserializeUser(function(serializedUser, done) {
+      User.forge({ "id" : serializedUser.id})
         .fetch()
         .then(function (user) {
-          done(null, user.toJSON());
+          var obj = user.toJSON();
+          obj.loginType = serializedUser.loginType;
+          done(null, obj);
         })
         .catch(function (err) {
           done(err, null);
@@ -55,12 +59,17 @@ module.exports = function(passport) {
       // User.forge() wont fire unless data is sent back
       process.nextTick(function() {
 
-        User.forge({ "email" : email })
+        // TODO: check to see if username is allowed by checking negative characters
+
+        User.query(function (qb) {
+          qb.orWhere({ "email" : email });
+          qb.orWhere({ "username" : req.body.username});
+        })
         .fetch()
         .then(function (user) {
           if(user) {
             //user already exists
-            return done(null, false, {success:false, message: 'That email is already being used "' + email +'"'});
+            return done(null, false, {success:false, message: "Check Email or Display Name"});
           } else {
             //user doesnt exist and no errors happens
 
@@ -74,8 +83,9 @@ module.exports = function(passport) {
               })
               .save()
               .then(function(newUser){
-
-                return done(null, newUser);
+                var obj = newUser.toJSON();
+                obj.loginType = 'local';
+                return done(null, obj);
               })
               //if an error happens when saving the user
               .catch(function(err){
@@ -112,14 +122,17 @@ module.exports = function(passport) {
         .then(function(user){
           // if no user is found, return the message
           if(!user)
-            return done(null,false, {success:false, message: "No user found with this email: " + email});
+            return done(null,false, {success:false, message: "Invalid Credentials"});
 
           // if the user is found but the password is wrong
           if(!(bcrypt.compareSync(password, user.attributes.password.toString())))
-            return done(null, false, {success:false, message: "Oops! Wrong password."});
+            return done(null, false, {success:false, message: "Invalid Credentials"});
+
+            var obj = user.attributes.toJSON();
+            obj.loginType = 'local';
 
           // all is well, return successful user
-          return done(null, user.attributes);
+          return done(null, obj);
         })
         .catch(function(err){
           // if there are any errors, return the error before anything else
@@ -151,19 +164,25 @@ module.exports = function(passport) {
         .then(function (user) {
 
           // if the user is found, then log them in
-          if (user)
-            return done(null, user);
+          if (user) {
+            var obj = user.toJSON();
+            obj.loginType = 'facebook';
+            return done(null, obj);
+          }
             console.log(profile);
             User.forge({
               // set all of the facebook information in our user model
               "facebook_id"    : profile.id, // set the users facebook id
               "facebook_token" : token, // we will save the token that facebook provides to the user
               "facebook_name"  : (profile.name.givenName && profile.name.familyName) ? profile.name.givenName + ' ' + profile.name.familyName : profile.displayName, // look at the passport user profile to see how names are returned
-              "facebook_email" : (profile.emails) ? profile.emails[0].value : "no email defined", // facebook can return multiple emails so we'll take the first
+              "facebook_email" : (profile.emails) ? profile.emails[0].value : false, // facebook can return multiple emails so we'll take the first
             })
             .save()
-            .then(function (user) {
-              return done(null, newUser);
+            .then(function (newUser) {
+              var obj = user.attributes.toJSON();
+              obj.loginType = 'facebook';
+
+              return done(null, obj);
             })
             //if an error happens when saving the user
             .catch(function(err){
@@ -175,7 +194,6 @@ module.exports = function(passport) {
           // if there are any errors, return the error before anything else
           return done(err.message);
         });
-
       });
 
 

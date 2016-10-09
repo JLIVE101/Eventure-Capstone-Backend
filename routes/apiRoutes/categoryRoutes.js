@@ -13,7 +13,7 @@ var Categories = Bookshelf.Collection.extend({
 module.exports = function(router) {
 
   //fetch all categories
-  router.route('/categories').get(mw.verifyToken, function(req, res) {
+  router.route('/categories').get( function(req, res) {
     Categories.query(function (qb) {
       //if name is sent as a parameter
       if(req.query.name)
@@ -28,7 +28,7 @@ module.exports = function(router) {
     });
   })
   //create a new category
-  .post([mw.verifyToken, mw.isAdmin], function(req, res) {
+  .post([mw.isAdmin], function(req, res) {
     Category.forge({ name: req.body.name })
       .save()
       .then(function (category) {
@@ -53,7 +53,7 @@ module.exports = function(router) {
     });
   })
   //update category
-  .put([mw.verifyToken, mw.isAdmin], function(req, res) {
+  .put([mw.isAdmin], function(req, res) {
     Category.forge({id: req.params.id})
     .fetch({require: true})
     .then(function (category) {
@@ -70,7 +70,7 @@ module.exports = function(router) {
     });
   })
   //delete a category
-  .delete([mw.verifyToken, mw.isAdmin], function (req, res) {
+  .delete([mw.isAdmin], function (req, res) {
     Category.forge({id: req.params.id})
     .fetch({require: true})
     .then(function (category) {
