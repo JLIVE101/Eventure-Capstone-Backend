@@ -55,6 +55,8 @@ module.exports = function(router) {
       start_date      : new Date(req.body.start_date),
       end_date        : new Date(req.body.end_date),
       user_id         : req.user.id || req.decoded.id,
+      latitude        : req.body.latitude,
+      longitude       : req.body.latitude,
       private         : req.body.private || false,
       password        : req.body.password || null,
       picture_url     : req.body.picture_url || null,
@@ -109,6 +111,8 @@ module.exports = function(router) {
         password        : (req.body.password) ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : event.get('password'),
         picture_url     : req.body.picture_url || event.get('picture_url'),
         address         : req.body.address || event.get('address'),
+        latitude        : req.body.latitude || event.get('latitude'),
+        longitude       : req.body.latitude || event.get('longitude'),
         saved           : req.body.saved || event.get('saved'),
         private         : req.body.private || event.get('private'),
       })
