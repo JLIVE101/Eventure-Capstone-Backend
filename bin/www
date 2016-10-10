@@ -1,13 +1,20 @@
 //get express app object
-document.setAttribute('attr', value);
+
+
+var app = require('../app');
+var http = require('http');
 //set the port number
 
 
 //start the server
-var server = app.listen(app.get('port') , function(){
-  //print out server port in console.
-  console.log('API Server listening on port ' + server.address().port);
-});
+var server = http.createServer(app);
 
-var io = require('socket.io').listen(server);
-require('../sockets/base')(io);
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(app.get('port'), '127.0.0.1');
+console.log('API Server listening on port ' + '127.0.0.1:' + app.get('port'));
+
+//var io = require('socket.io').listen(server);
+//require('../sockets/base')(io);
