@@ -44,7 +44,7 @@ module.exports = function(router) {
 
   //create a new event
   .post([mw.isLoggedIn], function(req, res) {
-    req.body.categories = req.body.categories.split(",");
+    console.log("categories are: " + req.body.categories);
     //check if any fields are missing
     if(!req.body.name || (!req.body.description || req.body.description.length < 15) || !req.body.start_date || !req.body.end_date)
       return res.status(500).json({ success: false, message: "Missing some fields" });
@@ -55,15 +55,13 @@ module.exports = function(router) {
       start_date      : new Date(req.body.start_date),
       end_date        : new Date(req.body.end_date),
       user_id         : req.user.id || req.decoded.id,
-      latitude        : req.body.latitude,
-      longitude       : req.body.latitude,
+      latitude        : req.body.latitude || "",
+      longitude       : req.body.longitude || "",
       private         : req.body.private || false,
       password        : req.body.password || null,
       picture_url     : req.body.picture_url || null,
       address         : req.body.address || null,
       saved           : req.body.saved || false,
-
-
     })
       .save()
       .then(function (event) {
@@ -112,7 +110,7 @@ module.exports = function(router) {
         picture_url     : req.body.picture_url || event.get('picture_url'),
         address         : req.body.address || event.get('address'),
         latitude        : req.body.latitude || event.get('latitude'),
-        longitude       : req.body.latitude || event.get('longitude'),
+        longitude       : req.body.longitude || event.get('longitude'),
         saved           : req.body.saved || event.get('saved'),
         private         : req.body.private || event.get('private'),
       })
