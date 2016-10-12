@@ -190,9 +190,10 @@ module.exports = function(router) {
       }
 
       //else user hasnt joined this event so add them to event users list
+      var eventName = event.get('name');
       event.save().then(function (newEvent) {
         newEvent.users().attach(req.user.id);
-        return res.json({success: true, data: 'You joined ' + newEvent.get('name') + '!! '});
+        return res.json({success: true, data: 'You joined ' + eventName + '!! '});
       })
       .catch(function (err) {
         res.status(500).json({success: false, message: err.message || err});

@@ -79,6 +79,7 @@ module.exports = function(passport) {
                 "username"        : req.body.username,
                 "password"        : bcrypt.hashSync(password, bcrypt.genSaltSync(10), null), //generate hash
                 "email"           : email,
+                "admin"           : 0,
                 "primary_account" : "local",
               })
               .save()
@@ -176,6 +177,8 @@ module.exports = function(passport) {
               "facebook_token" : token, // we will save the token that facebook provides to the user
               "facebook_name"  : (profile.name.givenName && profile.name.familyName) ? profile.name.givenName + ' ' + profile.name.familyName : profile.displayName, // look at the passport user profile to see how names are returned
               "facebook_email" : (profile.emails) ? profile.emails[0].value : false, // facebook can return multiple emails so we'll take the first
+              "admin"          : 0,
+              "primary_account": 'facebook'
             })
             .save()
             .then(function (newUser) {
