@@ -21,7 +21,7 @@ module.exports = function(router) {
     Users.forge()
     .fetch()
     .then(function (users) {
-      res.json({success: true, data: users.toJSON()});
+      res.json({success: true, data: users});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
@@ -39,7 +39,7 @@ module.exports = function(router) {
         return res.status(404).json({success:false, message: "User not found for id: " + req.params.id});
 
       //convert user into JSON
-      var newUser = user.toJSON();
+      var newUser = user;
 
       //delete these attributes
       delete newUser.password;
@@ -192,7 +192,7 @@ module.exports = function(router) {
         return res.send({success: true, data: []});
 
       //else return users events
-      res.json({success: true, data: user.related('createdEvents').toJSON()});
+      res.json({success: true, data: user.related('createdEvents')});
     })
     .catch(function(err){
       res.status(500).json({success: false, message: err.message});
@@ -216,7 +216,7 @@ module.exports = function(router) {
         return res.send({success: true, data: []});
 
       //else return users events
-      res.json({success: true, data: user.related('joinedEevents').toJSON()});
+      res.json({success: true, data: user.related('joinedEvents')});
     })
     .catch(function(err){
       res.status(500).json({success: false, message: err.message});

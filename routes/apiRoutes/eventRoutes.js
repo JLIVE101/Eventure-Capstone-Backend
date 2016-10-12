@@ -8,6 +8,7 @@ var mw         = require('../../helpers/middleware');
 var Events     = Bookshelf.Collection.extend({
   model: Event
 });
+var fs         = require('fs');
 
 // TODO : add documentation for all routes for eventRoutes
 
@@ -33,7 +34,7 @@ module.exports = function(router) {
       if(!events)
         return res.json({success: true, data: []});
 
-      res.json({success: true, data: events.toJSON()});
+      res.json({success: true, data: events});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
@@ -48,6 +49,18 @@ module.exports = function(router) {
     //check if any fields are missing
     if(!req.body.name || (!req.body.description || req.body.description.length < 15) || !req.body.start_date || !req.body.end_date)
       return res.status(500).json({ success: false, message: "Missing some fields" });
+
+    //store file in uploads directory if there is a file
+    if(req.file && req.file.eventImage) {
+      fs.readFile(req.files.eventImage.path, function (err, data) {
+        var newPath = __dirname + "/uploads/" + req.file.eventImage.name;
+        fs.writeFile(newPath, data, function (err) { });
+      });
+    }
+    var newPath = __dirname + "/uploads/" + req.file.eventImage.name;
+    console.log(newPath);
+
+    return res.send("hello");
 
     Event.forge({
       name            : req.body.name,
@@ -86,7 +99,7 @@ module.exports = function(router) {
     })
     .fetch({withRelated: 'users'})
     .then(function (event) {
-      res.json({success: true, data: event.toJSON()});
+      res.json({success: true, data: event});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
@@ -179,7 +192,7 @@ module.exports = function(router) {
       //else user hasnt joined this event so add them to event users list
       event.save().then(function (newEvent) {
         newEvent.users().attach(req.user.id);
-        return res.json({success: true, data: 'You joined ' + event.get('name') + '!! '});
+        return res.json({success: true, data: 'You joined ' + newEvent.get('name') + '!! '});
       })
       .catch(function (err) {
         res.status(500).json({success: false, message: err.message || err});

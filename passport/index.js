@@ -34,7 +34,7 @@ module.exports = function(passport) {
       User.forge({ "id" : serializedUser.id})
         .fetch()
         .then(function (user) {
-          var obj = user.toJSON();
+          var obj = user;
           obj.loginType = serializedUser.loginType;
           done(null, obj);
         })
@@ -83,7 +83,7 @@ module.exports = function(passport) {
               })
               .save()
               .then(function(newUser){
-                var obj = newUser.toJSON();
+                var obj = newUser;
                 obj.loginType = 'local';
                 return done(null, obj);
               })
@@ -128,7 +128,7 @@ module.exports = function(passport) {
           if(!(bcrypt.compareSync(password, user.attributes.password.toString())))
             return done(null, false, {success:false, message: "Invalid Credentials"});
 
-            var obj = user.attributes.toJSON();
+            var obj = user.attributes;
             obj.loginType = 'local';
 
           // all is well, return successful user
@@ -165,7 +165,7 @@ module.exports = function(passport) {
 
           // if the user is found, then log them in
           if (user) {
-            var obj = user.toJSON();
+            var obj = user.attributes;
             obj.loginType = 'facebook';
             return done(null, obj);
           }
@@ -179,7 +179,7 @@ module.exports = function(passport) {
             })
             .save()
             .then(function (newUser) {
-              var obj = user.attributes.toJSON();
+              var obj = user;
               obj.loginType = 'facebook';
 
               return done(null, obj);
