@@ -50,18 +50,6 @@ module.exports = function(router) {
     if(!req.body.name || (!req.body.description || req.body.description.length < 15) || !req.body.start_date || !req.body.end_date)
       return res.status(500).json({ success: false, message: "Missing some fields" });
 
-    //store file in uploads directory if there is a file
-    if(req.file && req.file.eventImage) {
-      fs.readFile(req.files.eventImage.path, function (err, data) {
-        var newPath = __dirname + "/uploads/" + req.file.eventImage.name;
-        fs.writeFile(newPath, data, function (err) { });
-      });
-    }
-    var newPath = __dirname + "/uploads/" + req.file.eventImage.name;
-    console.log(newPath);
-
-    return res.send("hello");
-
     Event.forge({
       name            : req.body.name,
       html_description: req.body.description,
@@ -92,6 +80,9 @@ module.exports = function(router) {
 
 
   router.route('/events/:id')
+
+
+
   //get specific event by id
   .get(function(req, res) {
     Event.forge({
@@ -105,6 +96,9 @@ module.exports = function(router) {
       res.status(500).json({success: false, message: err.message});
     });
   })
+
+
+
   //update event by id
   .put([mw.isLoggedIn], function(req, res) {
     Event.forge({id: req.params.id})
@@ -138,6 +132,10 @@ module.exports = function(router) {
       res.status(500).json({success: false, message: err.message});
     });
   })
+
+
+
+
   //delete an event by id
   .delete([mw.isLoggedIn], function (req, res) {
     Event.forge({id: req.params.id})
@@ -162,6 +160,8 @@ module.exports = function(router) {
 
 
   router.route('/events/join/:id')
+
+
 
   //join an event
   .post([mw.isLoggedIn], function (req, res) {
@@ -205,6 +205,9 @@ module.exports = function(router) {
     });
   });
 
+
+
+
   //leave an event
   router.route('/events/leave/:id')
     .post([mw.isLoggedIn], function (req, res) {
@@ -240,6 +243,9 @@ module.exports = function(router) {
         res.status(500).json({success: false, message: err.message || err});
       });
     });
+
+
+
 
   //add category to event
   router.route('/events/:id/categories/remove')
@@ -277,6 +283,9 @@ module.exports = function(router) {
           res.status(500).json({success: false, message: err.message});
         });
     });
+
+
+
 
     //add category to event
     router.route('/events/:id/categories/add')
@@ -316,6 +325,9 @@ module.exports = function(router) {
       });
 
       router.route("/events/:id/comments")
+
+
+
       //get all comments for event
         .get(function (req, res, next) {
           Comment.forge({"event_id" : req.params.id})
@@ -343,6 +355,33 @@ module.exports = function(router) {
             res.status(500).json({success: false, message: err.message});
           });
         });
+
+
+        router.route("checkIfJoined/events/:event_id/:user_id")
+          .get(function (req, res, next) {
+
+            Event.forge({ id: req.params.event_id })
+            .fetch({withRelated: [{'users': function (qb) {
+              qb.where('user_id', '=', req.params.user_id);
+            }}]})
+            .then(function (event) {
+
+              //if event is defined than user joined
+              if(event) {
+                return res.json({success: true, data: true});
+              }
+              // else user hasnt joined
+              else {
+                return res.json({success: true, data: false});
+
+              }
+            })
+            .catch(function (err) {
+              res.status(500).json({success: false, message: err.message});
+            })
+
+          });
+
 
 
 
