@@ -33,7 +33,7 @@ module.exports = function(router) {
       if(!events)
         return res.json({success: true, data: []});
 
-      res.json({success: true, data: events.toJSON()});
+      res.json({success: true, data: events});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
@@ -86,7 +86,7 @@ module.exports = function(router) {
     })
     .fetch({withRelated: 'users'})
     .then(function (event) {
-      res.json({success: true, data: event.toJSON()});
+      res.json({success: true, data: event});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
