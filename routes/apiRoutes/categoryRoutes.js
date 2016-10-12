@@ -21,7 +21,7 @@ module.exports = function(router) {
     })
     .fetch()
     .then(function (collection) {
-      res.json({success: true, data: collection.toJSON()});
+      res.json({success: true, data: collection});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
@@ -46,7 +46,7 @@ module.exports = function(router) {
     })
     .fetch()
     .then(function (collection) {
-      res.json({success: true, data: collection.toJSON()});
+      res.json({success: true, data: collection});
     })
     .catch(function (err) {
       res.status(500).json({success: false, message: err.message});
