@@ -4,8 +4,8 @@ module.exports = {
 		"connection":
 		{
 			"host": "localhost",
-			"user": "master_slithery",
-			"password": "HRmz7JdY",
+			"user": "root",
+			"password": "1234",
 			"database": "eventure_db",
 			"charset": "utf8",
 		}

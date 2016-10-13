@@ -44,11 +44,25 @@ module.exports = function(router) {
 
 
   //create a new event
-  .post([mw.isLoggedIn], function(req, res) {
+  .post(/*[mw.isLoggedIn],*/ function(req, res) {
+    console.log(req.files);
     console.log("categories are: " + req.body.categories);
+    console.log(req.body);
     //check if any fields are missing
     if(!req.body.name || (!req.body.description || req.body.description.length < 15) || !req.body.start_date || !req.body.end_date)
       return res.status(500).json({ success: false, message: "Missing some fields" });
+
+
+    //get file and save it and store pathName to variable
+    /*fs.readFile(req.files.eventImage.path, function (err, data) {
+      // ...
+      var newPath = "../../uploads/" + eventImage.name;
+      fs.writeFile(newPath, data, function (err) {
+        return res.send("filename is:" + eventImage.name);
+      });
+    });
+
+    return;*/
 
     Event.forge({
       name            : req.body.name,
@@ -373,7 +387,6 @@ module.exports = function(router) {
               // else user hasnt joined
               else {
                 return res.json({success: true, data: false});
-
               }
             })
             .catch(function (err) {
