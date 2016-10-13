@@ -13,8 +13,8 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(app.get('port'), '127.0.0.1');
-console.log('API Server listening on port ' + '127.0.0.1:' + app.get('port'));
+server.listen(app.get('port'), 'localhost');
+console.log('API Server listening on port ' + 'localhost:' + app.get('port'));
 
-//var io = require('socket.io').listen(server);
-//require('../sockets/base')(io);
+var io = require('socket.io').listen(server);
+require('../sockets/base')(io);

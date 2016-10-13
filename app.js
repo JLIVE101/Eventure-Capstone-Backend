@@ -2,18 +2,18 @@
 // get the packages we need
 // ========================
 
-var config       = require('./config');
-var express      = require('express');
-var app          = express();
-var port         = process.env.PORT || 9000;
-var passport     = require('passport');
-var mw           = require('./helpers/middleware');
+var config = require('./config');
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 9000;
+var passport = require('passport');
+var mw = require('./helpers/middleware');
 
-var apiRoutes    = require('./routes/api');
-var morgan       = require('morgan');
+var apiRoutes = require('./routes/api');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyparser   = require('body-parser');
-var session      = require('express-session');
+var bodyparser = require('body-parser');
+var session = require('express-session');
 // TODO : SETUP MONGODB FOR COMMENTS BETWEEN USERS
 // TODO : SETUP SOCKET SERVER
 
@@ -28,20 +28,35 @@ app.set('port', port);
 
 // allow cross origin requests
 app.all("*", function (req, res, next) {
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-    return next();
+	var allowedOrigins = ['http://localhost:3000', 'http://199.7.157.4'];
+	var origin = req.headers.origin;
+	if(allowedOrigins.indexOf(origin) > -1) {
+    console.log("host is: " + req.host);
+		res.setHeader('Access-Control-Allow-Origin', origin);
+	}
+	res.header("Access-Control-Allow-Credentials", "true");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+	return next();
 });
+//set up static server to server any uploaded images
+app.use('/uploads', express.static('uploads'));
+
 // use body parser so we can get info from POST and/or URL parameters
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({
+	extended: true,
+	limit: '20mb',
+}));
 app.use(bodyparser.json());
 
+
+
 //required for passport
-app.use(session({ secret: config.passport.secret })); // session secret
+app.use(session({
+	secret: config.passport.secret
+})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./passport/index')(passport);

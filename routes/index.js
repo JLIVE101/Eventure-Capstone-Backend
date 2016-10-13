@@ -19,6 +19,7 @@ app.get('/loggedin', function (req, res) {
 
 	var obj = {};
 	if(req.isAuthenticated()) {
+		console.log(req.user);
 		obj.success = true;
 		obj.user = req.user;
 	} else {
@@ -66,6 +67,7 @@ app.post('/local_login', function (req, res, next) {
 			return next(err);
 		if(!user)
 			return res.status(401).json(info);
+
 
 		//at this point there are no errors so initiate login.
 		req.login(user, function (err) {

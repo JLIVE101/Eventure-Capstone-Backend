@@ -1,17 +1,13 @@
-
-
 module.exports = function (io) {
 
-  EVENTS_NAMESPACE = '/events/socket';
+  EVENTS_NAMESPACE = 'messages';
   var namespace = io.of(EVENTS_NAMESPACE);
   var rooms = [];
 
   namespace.on('connection', function (socket) {
-    
-    console.log("socket connected: " + socket.id);
 
 
+    socket.emit('hello', 'hello user');
 
   });
-
 }
