@@ -87,7 +87,7 @@ module.exports = function(router) {
       longitude       : req.body.longitude || "",
       private         : req.body.private || false,
       password        : req.body.password || null,
-      picture_url     : req.body.picture_url || null,
+      picture_url     : req.body.picture_url || "http://localhost:9000/uploads/defaults/default.jpg",
       address         : req.body.address || null,
       saved           : req.body.saved || false,
     })
