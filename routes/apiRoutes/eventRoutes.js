@@ -25,14 +25,27 @@ module.exports = function(router) {
         qb.where('html_description', 'like', '%' + req.query.description + '%');
       if(req.query.user_id)
         qb.where('user_id', '=', req.query.user_id);
+      if(req.query.limitTo)
+        qb.limit(req.query.limitTo);
+      qb.orderBy('start_date','DESC');
     })
+    .fetch({withRelated: [{'categories': function (qb) {
+      if(req.query.category_name) {
+        qb.where('name', '=', req.query.category_name);
+      }
 
-    .fetch({withRelated: ['owner','categories','ratings','users']})
+    }},'ratings',{'users': function (qb) {
+       qb.select('user_id','event_id');
+    }},{'owner': function (qb) {
+      qb.select('username', 'facebook_name','twitter_displayName','google_name');
+    }}]})
     .then(function (events) {
 
       //if there are no events
       if(!events)
         return res.json({success: true, data: []});
+
+
 
       res.json({success: true, data: events});
     })
@@ -102,7 +115,9 @@ module.exports = function(router) {
     Event.forge({
       "id" : req.params.id
     })
-    .fetch({withRelated: 'users'})
+    .fetch({withRelated: [{'users': function (qb) {
+      return qb.select('user_id','event_id');
+    }},'owner']})
     .then(function (event) {
       res.json({success: true, data: event});
     })
@@ -182,6 +197,7 @@ module.exports = function(router) {
     Event.forge({id: req.params.id})
     .fetch({withRelated: [{'users': function (qb) {
       qb.where('user_id', '=', req.user.id);
+      qb.select('user_id','event_id');
     }}]})
     .then(function (event) {
 
@@ -227,6 +243,7 @@ module.exports = function(router) {
     .post([mw.isLoggedIn], function (req, res) {
       Event.forge({id: req.params.id})
       .fetch({withRelated: [{'users': function (qb) {
+        qb.select('user_id','event_id');
         qb.where('user_id', '=', req.user.id);
       }}]})
       .then(function (event) {
