@@ -1,6 +1,7 @@
 var Bookshelf = require('../../database').getBookShelf();
 Bookshelf.plugin('registry');
 var User      = require('../../models/User');
+var Event  = require('../../models/Event');
 var Category  = require('../../models/Category');
 var Categories = Bookshelf.Collection.extend({
   model: Category
@@ -119,6 +120,9 @@ module.exports = function(router) {
   router.route('/users/:id/categories')
   .get( function (req, res) {
     User.forge("id", req.params.id)
+    .query(function (qb) {
+      return qb.select('id');
+    })
     .fetch({ withRelated: [{'categories': function(qb){
         if(req.query.name)
           qb.where('name', 'like', '%' + req.query.name + '%');
@@ -177,22 +181,21 @@ module.exports = function(router) {
   //get user events
   router.route('/users/:id/createdEvents')
   .get( function (req, res) {
-    User.forge({ "id" : req.params.id })
-    .fetch({ withRelated: [{'createdEvents' : function (qb) {
-      if(req.query.name)
-        qb.where('name', 'like', '%' + req.query.name + '%');
-      }}]
+    Event.query(function (qb) {
+      qb.where("user_id" , req.params.id);
+      if(req.query.eventNotEqual)
+        qb.where('id','!=', req.query.eventNotEqual);
     })
-    .then(function( user ){
+    .fetchAll({ withRelated: [{'users' : function (qb) {
+        qb.select('user_id','event_id');
+      }},'categories']})
+    .then(function( events ){
       //if user doesnt exist
-      if(!user)
-        return res.send({success: false, message: "No user found with id " + req.params.id});
-      //if user has no created events
-      if(!user.related || user.related('createdEvents').length === 0)
+      if(!events || events.length === 0)
         return res.send({success: true, data: []});
 
       //else return users events
-      res.json({success: true, data: user.related('createdEvents')});
+      res.json({success: true, data: events });
     })
     .catch(function(err){
       res.status(500).json({success: false, message: err.message});
