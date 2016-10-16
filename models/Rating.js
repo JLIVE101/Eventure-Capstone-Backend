@@ -7,11 +7,11 @@ var User      = require('./User');
 var Rating =  Bookshelf.Model.extend({
   "tableName": 'ratings',
 
-  users: function() {
+  user: function() {
     return this.belongs('User');
   },
 
-  events: function() {
+  event: function() {
     return this.belongsTo('Event');
   },
 

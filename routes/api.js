@@ -12,6 +12,7 @@ require('./apiRoutes/userRoutes')(router);
 require('./apiRoutes/eventRoutes')(router);
 require('./apiRoutes/categoryRoutes')(router);
 require('./apiRoutes/commentRoutes')(router);
+require('./apiRoutes/ratingRoutes')(router);
 
 
 
