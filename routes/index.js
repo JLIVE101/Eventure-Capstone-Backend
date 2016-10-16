@@ -108,7 +108,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 // =====================================
 app.get('/logout', function (req, res) {
 	req.logout();
-	res.redirect('http://localhost:3000/#/');
+	res.end();
 	//After clearing user object in session send back a null user
 	//clear any jsonwebtokens
 });

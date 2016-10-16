@@ -47,7 +47,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyparser.urlencoded({
 	extended: true,
-	limit: '20mb',
+	limit: '10mb',
 }));
 app.use(bodyparser.json());
 
