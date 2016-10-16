@@ -26,7 +26,10 @@
 		"91bc629b-bc56-31fc-aeb7-465ca6d5bd48",
 		"b28c91ad-060d-06bb-8793-86ff88928842",
 		"33af9b6c-5e37-ea28-b32a-c85ad0813227",
-		"742eb272-f52e-dd3c-72fc-41ede71b48cf"
+		"742eb272-f52e-dd3c-72fc-41ede71b48cf",
+		"c74f2a68-28f9-ddab-6c89-5a2a3a3f8f79",
+		"8f2d1044-015c-d43e-5eba-4728731b7030",
+		"8216533d-bb64-8c36-9047-ffeb0fa86fa7"
 	],
 	"folders": [],
 	"timestamp": 1474474279409,
@@ -391,6 +394,45 @@
 			"responses": []
 		},
 		{
+			"id": "8216533d-bb64-8c36-9047-ffeb0fa86fa7",
+			"headers": "",
+			"url": "localhost:9000/api/v1/ratings/event/22/likes",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [
+				{
+					"key": "username",
+					"value": "guysanOG",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "tnte@t.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Get Event likes",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1476598443020,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
 			"id": "8ac18b18-2b3b-6c7b-8af1-0ad766700786",
 			"headers": "x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpMSVZFIiwiaWQiOjEsImdlbmRlciI6Im1hbGUiLCJkYXRlX29mX2JpcnRoIjoiMTk5NC0wMS0zMVQwNTowMDowMC4wMDBaIiwiZW1haWwiOiJqd2lsbGlhbXMxOTkwNTVAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ikpvc2h1YSIsImxhc3RfbmFtZSI6IldpbGxpYW1zIiwicGhvbmVfbnVtYmVyIjoyOTA3OTgxNDQzNTcxNiwiZmFjZWJvb2tfaWQiOm51bGwsImZhY2Vib29rX3Rva2VuIjpudWxsLCJmYWNlYm9va19uYW1lIjpudWxsLCJmYWNlYm9va19lbWFpbCI6bnVsbCwidHdpdHRlcl9pZCI6bnVsbCwidHdpdHRlcl90b2tlbiI6bnVsbCwidHdpdHRlcl91c2VybmFtZSI6bnVsbCwidHdpdHRlcl9kaXNwbGF5TmFtZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJnb29nbGVfdG9rZW4iOm51bGwsImdvb2dsZV9uYW1lIjpudWxsLCJnb29nbGVfZW1haWwiOm51bGwsInByaW1hcnlfYWNjb3VudCI6ImxvY2FsIiwiYWRtaW4iOjAsImNyZWF0ZWRfYXQiOiIyMDE2LTA5LTI1VDA1OjI3OjUzLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAxNi0wOS0yNVQwNjozNzo1Ny4wMDBaIiwiaWF0IjoxNDc0Nzg1NDg4LCJleHAiOjE0NzQ4NzE4ODh9.m7hhrpi4_l1xts9PkGitfpWAS37E05ZUJkCT3ILum-U\nContent-Type: application/x-www-form-urlencoded\n",
 			"url": "localhost:9000/api/v1/events/join/3",
@@ -408,6 +450,45 @@
 			"description": "Join event",
 			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
 			"responses": []
+		},
+		{
+			"id": "8f2d1044-015c-d43e-5eba-4728731b7030",
+			"headers": "",
+			"url": "localhost:9000/api/v1/ratings/event/22/dislikes",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [
+				{
+					"key": "username",
+					"value": "guysanOG",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "29079814435716",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "tnte@t.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Get Event dislikes",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1476598422153,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
 		},
 		{
 			"id": "91bc629b-bc56-31fc-aeb7-465ca6d5bd48",
@@ -664,6 +745,27 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {}
+		},
+		{
+			"id": "c74f2a68-28f9-ddab-6c89-5a2a3a3f8f79",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:9000/api/v1/categories/8/events",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "75f8197f-1ab5-f48d-fbb5-2db950a8aaea",
+			"data": [],
+			"dataMode": "raw",
+			"name": "get events by categories",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1476592410071,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"rating\": true\n}\n\t"
 		},
 		{
 			"id": "cf603d94-1e96-3dae-50a2-9e4660614f4f",
