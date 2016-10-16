@@ -117,7 +117,11 @@ module.exports = function(router) {
     })
     .fetch({withRelated: [{'users': function (qb) {
       return qb.select('user_id','event_id');
-    }},'owner']})
+    }},{'owner': function (qb) {
+      qb.select('id');
+    }}, {'ratings': function (qb) {
+      qb.where('event_id','=',req.params.id);
+    }}]})
     .then(function (event) {
       res.json({success: true, data: event});
     })

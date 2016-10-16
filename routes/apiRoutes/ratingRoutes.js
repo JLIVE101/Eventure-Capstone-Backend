@@ -31,7 +31,8 @@ module.exports = function(router) {
           rating.save({
             "event_id" : req.params.id,
             "user_id"  : req.user.id,
-            "like"     : req.body.rating
+            "like"     : req.body.rating,
+            "dislike"  : !req.body.rating
           })
           .then(function (rating) {
             delete rating.related('events');
@@ -42,12 +43,18 @@ module.exports = function(router) {
           });
         }
         else {
+
+
+
+
+
           //else rating is not found create a record
-          Rating.forge().save({
+          Rating.forge({
             "event_id" : req.params.id,
             "user_id"  : req.user.id,
-            "like"     : req.body.rating
-          })
+            "like"     : req.body.rating,
+            "dislike"  : !req.body.rating
+          }).save()
           .then(function (rating) {
             delete rating.related('events');
             res.json({success: true, data: rating.attributes});

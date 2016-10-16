@@ -86,4 +86,19 @@ module.exports = function(router) {
       res.status(500).json({success: false, message: err.message});
     });
   });
+
+  router.route("/categories/:id/events")
+    .get(function (req, res) {
+      Category.forge({id: req.params.id})
+      .fetch({require: true, withRelated: 'events'})
+      .then(function (category) {
+        if(category.related) {
+         return res.json({success: true, data: category.related('events')});
+       }
+       return res.json({success: true, data: []});
+      })
+      .catch(function (err) {
+        res.status(500).json({success: false, message: err.message});
+      });
+    });
 };
