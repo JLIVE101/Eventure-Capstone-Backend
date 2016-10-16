@@ -4,6 +4,9 @@ Bookshelf.plugin('registry');
 var Event      = require('../../models/Event');
 var Rating     = require('../../models/Rating');
 var mw         = require('../../helpers/middleware');
+var Ratings    = Bookshelf.Collection.extend({
+  model: Rating
+});
 
 
 
@@ -31,7 +34,8 @@ module.exports = function(router) {
           rating.save({
             "event_id" : req.params.id,
             "user_id"  : req.user.id,
-            "like"     : req.body.rating
+            "like"     : req.body.rating,
+            "dislike"  : !req.body.rating
           })
           .then(function (rating) {
             delete rating.related('events');
@@ -42,12 +46,18 @@ module.exports = function(router) {
           });
         }
         else {
+
+
+
+
+
           //else rating is not found create a record
-          Rating.forge().save({
+          Rating.forge({
             "event_id" : req.params.id,
             "user_id"  : req.user.id,
-            "like"     : req.body.rating
-          })
+            "like"     : req.body.rating,
+            "dislike"  : !req.body.rating
+          }).save()
           .then(function (rating) {
             delete rating.related('events');
             res.json({success: true, data: rating.attributes});
@@ -65,9 +75,39 @@ module.exports = function(router) {
 
     });
 
-  //route to unlike an event
+    router.route('/ratings/event/:id/likes')
+      .get(function (req, res) {
 
+        Rating.query(function (qb) {
+          qb.where('like','=', 1);
+          qb.andWhere('event_id','=', req.params.id);
+        })
+        .count()
+        .then(function (count) {
+          res.json({success: true, data: count});
+        })
+        .catch(function (err) {
+          res.status(500).json({success: false, message: err.message});
+        });
 
+      });
 
+    router.route('/ratings/event/:id/dislikes')
+      .get(function (req, res) {
+
+        Ratings.query(function (qb) {
+          qb.where('dislike','=', 1);
+          qb.andWhere('event_id','=', req.params.id);
+        })
+        .count()
+        .then(function (count) {
+
+          res.json({success: true, data: count});
+        })
+        .catch(function (err) {
+          res.status(500).json({success: false, message: err.message});
+        });
+
+      });
 
 };
