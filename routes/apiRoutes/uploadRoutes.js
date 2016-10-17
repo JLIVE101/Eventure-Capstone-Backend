@@ -14,11 +14,6 @@ module.exports = function (router) {
 
     var file = req.files.file;
 
-
-
-
-
-
     if(file) {
 
       //generate new file name
@@ -38,6 +33,31 @@ module.exports = function (router) {
 
     }
 
+  });
+
+  router.post('/uploads/profile/picture', multiPartyMiddleware,  function (req, res) {
+
+    var file = req.files.file;
+
+    if(file) {
+
+      //generate new file name
+      var newFileName = uuid.v4() + "." + file.name.split(".")[1];
+      //generate new path to file name
+      var newPath = path.join(__dirname,"..","..","uploads","users",newFileName);
+
+      fs.readFile(file.path, function (err, data) {
+        if(err)
+          return res.status(500).json({success: false, message: err.message});
+
+        fs.writeFile(newPath, data, function (err) {
+          if(err)
+            return res.status(500).json({success: false, message: err.message});
+
+          return res.json({success: true, data: "http://localhost:9000/uploads/users/" + newFileName});
+        });
+      });
+    }
   });
 
 
