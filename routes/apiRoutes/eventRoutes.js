@@ -57,7 +57,7 @@ module.exports = function(router) {
 
 
   //create a new event
-  .post(/*[mw.isLoggedIn],*/ function(req, res) {
+  .post([mw.isLoggedIn], function(req, res) {
     console.log(req.files);
     console.log("categories are: " + req.body.categories);
     console.log(req.body);
@@ -121,7 +121,7 @@ module.exports = function(router) {
       qb.select('id');
     }}, {'ratings': function (qb) {
       qb.where('event_id','=',req.params.id);
-    }}]})
+    }},'categories','comments']})
     .then(function (event) {
       res.json({success: true, data: event});
     })
