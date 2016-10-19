@@ -39,7 +39,7 @@ module.exports = function(router) {
           })
           .then(function (rating) {
             delete rating.related('events');
-            res.json({success: true, data: rating.attributes});
+            res.json({success: true, data: rating.id});
           })
           .catch(function (err) {
             res.status(500).json({success: false, message: err.message});
@@ -60,7 +60,7 @@ module.exports = function(router) {
           }).save()
           .then(function (rating) {
             delete rating.related('events');
-            res.json({success: true, data: rating.attributes});
+            res.json({success: true, data:  rating.id});
           })
           .catch(function (err) {
             res.status(500).json({success: false, message: err.message});

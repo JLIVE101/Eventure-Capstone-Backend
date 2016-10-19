@@ -57,7 +57,7 @@ module.exports = function(router) {
 
 
   //create a new event
-  .post(/*[mw.isLoggedIn],*/ function(req, res) {
+  .post([mw.isLoggedIn], function(req, res) {
     console.log(req.files);
     console.log("categories are: " + req.body.categories);
     console.log(req.body);
@@ -86,8 +86,8 @@ module.exports = function(router) {
       latitude        : req.body.latitude || "",
       longitude       : req.body.longitude || "",
       private         : req.body.private || false,
-      password        : req.body.password || null,
-      picture_url     : req.body.picture_url || "http://localhost:9000/uploads/defaults/default.jpg",
+      password        : (req.body.password) ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : null,
+      picture_url     : req.body.picture_url || null,
       address         : req.body.address || null,
       saved           : req.body.saved || false,
     })
@@ -121,7 +121,7 @@ module.exports = function(router) {
       qb.select('id');
     }}, {'ratings': function (qb) {
       qb.where('event_id','=',req.params.id);
-    }}]})
+    }},'categories','comments']})
     .then(function (event) {
       res.json({success: true, data: event});
     })
@@ -211,16 +211,16 @@ module.exports = function(router) {
 
       //if user is the owner of the event
       if(event.get('user_id') == req.user.id)
-        return res.status(500).json({success: false, message: "You are the owner of this event"});
+        return res.status(200).json({success: false, message: "You are the owner of this event"});
 
       //if user already joined event
       if(event.related && event.related('users').length > 0)
-        return res.status(500).json({success: false, message: "You already joined this event"});
+        return res.status(200).json({success: false, message: "You already joined this event"});
 
       //check if event has password, and if it does check if password is correct
       if((event.get('password') !== null && event.get('password') !== "")) {
         if(!(bcrypt.compareSync(req.body.password || "", event.get('password'))))
-          return res.status(500).json({success: false, message: "You've entered the wrong password"});
+          return res.status(200).json({success: false, message: "You've entered the wrong password"});
       }
 
       //else user hasnt joined this event so add them to event users list
@@ -417,6 +417,38 @@ module.exports = function(router) {
           });
 
 
+          //get event categories
+          router.route("/event/categories/:id")
+            .get(function (req, res) {
+              Event.forge({
+                "id" : req.params.id
+              })
+              .fetch({withRelated: 'categories'})
+              .then(function (event) {
+                if(event.related)
+                  res.json({success: true, data: event.related('categories')});
+                else
+                  res.json({success: true, data: []}); //event has no categories so return empty array
+              })
+              .catch(function (err) {
+                res.status(500).json({success: false, message: err.message});
+              });
+            });
 
 
+          //get amount of users attending event
+          router.route("/event/users/:id/count")
+            .get(function (req, res) {
+              Event.forge({"id" : req.params.id})
+              .fetch({withRelated: 'users'})
+              .then(function (event) {
+                if(event.related)
+                  return res.json({success: true, data: event.related('users').length});
+                else
+                  return res.json({success: true, data: 0});
+              })
+              .catch(function (err) {
+                res.status(500).json({success: false, message: err.message});
+              });
+            });
 };

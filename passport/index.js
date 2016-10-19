@@ -34,7 +34,7 @@ module.exports = function(passport) {
       User.forge({ "id" : serializedUser.id})
         .fetch()
         .then(function (user) {
-          var obj = user;
+          var obj = (user && user.attributes) ? user.attributes : user;
           obj.loginType = serializedUser.loginType;
           done(null, obj);
         })
