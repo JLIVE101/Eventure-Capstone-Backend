@@ -12,10 +12,7 @@ module.exports = function (io) {
 
     console.log("socket connected: " + socket.id);
 
-    var event = "new event";
-
-    socket.emit('hello', 'hello');
-
+    //when a user creates an event
     socket.on('createdEvent', function (id) {
       Event.forge({"id": id})
       .fetch()
@@ -27,6 +24,15 @@ module.exports = function (io) {
       })
     });
 
+    //when a user likes / dislikes an event ON EVENT DETAILS PAGE
+    socket.on('edUpdateLikesDislikesRequest', function () {
+      socket.broadcast.emit("updateLikesDislikes","");
+    });
+
+    //when a user joins / leaves an event ON EVENT DETAILS PAGE
+    socket.on('edUpdateAttendeesRequest', function () {
+      socket.broadcast.emit("updateAttendees","");
+    });
 
 
   });

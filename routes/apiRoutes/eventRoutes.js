@@ -436,6 +436,19 @@ module.exports = function(router) {
             });
 
 
-
-
+          //get amount of users attending event
+          router.route("/event/users/:id/count")
+            .get(function (req, res) {
+              Event.forge({"id" : req.params.id})
+              .fetch({withRelated: 'users'})
+              .then(function (event) {
+                if(event.related)
+                  return res.json({success: true, data: event.related('users').length});
+                else
+                  return res.json({success: true, data: 0});
+              })
+              .catch(function (err) {
+                res.status(500).json({success: false, message: err.message});
+              });
+            });
 };
