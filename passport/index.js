@@ -84,7 +84,7 @@ module.exports = function(passport) {
               })
               .save()
               .then(function(newUser){
-                var obj = newUser;
+                var obj = newUser.attributes;
                 obj.loginType = 'local';
                 return done(null, obj);
               })
