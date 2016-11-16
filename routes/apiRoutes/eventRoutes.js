@@ -1,4 +1,6 @@
 var Bookshelf  = require('../../database').getBookShelf();
+var cascadeDelete = require('bookshelf-cascade-delete');
+Bookshelf.plugin(cascadeDelete);
 Bookshelf.plugin('registry');
 var bcrypt     = require('bcrypt-nodejs');
 var Event      = require('../../models/Event');
@@ -172,21 +174,24 @@ module.exports = function(router) {
   //delete an event by id
   .delete([mw.isLoggedIn], function (req, res) {
     Event.forge({id: req.params.id})
-    .fetch({require: true})
+    .fetch({require: true, withRelated: ['categories','users','ratings','comments']})
     .then(function (event) {
       //if the user isnt the event owner return error
       if(event.get('user_id') !== req.user.id)
         return res.json({success: false, data: "You are not the owner of this event"});
 
+
+
+
       event.destroy().then(function () {
         res.json({success: true, data: 'Event successfully deleted'});
       })
       .catch(function (err) {
-        res.status(500).json({success: false, message: err.message});
+        res.status(500).json({success: false, message: err});
       });
     })
     .catch(function (err) {
-      res.status(500).json({success: false, message: err.message});
+      res.status(500).json({success: false, message: err});
     });
   });
 

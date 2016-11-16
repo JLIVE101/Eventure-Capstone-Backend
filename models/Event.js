@@ -32,6 +32,14 @@ var Event = Bookshelf.Model.extend({
     return this.hasMany('Rating', 'event_id');
   },
 
+  /*destroy: function () {
+    // Call the destroy prototype method.
+    Bookshelf.Model.prototype.destroy.apply(this, arguments);
+  }*/
+
+},
+{
+  dependents: ['ratings', 'comments', 'users', 'categories']
 });
 
 module.exports = Bookshelf.model('Event', Event);
