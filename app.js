@@ -28,15 +28,16 @@ app.set('port', port);
 
 // allow cross origin requests
 app.all("*", function (req, res, next) {
-	var allowedOrigins = ['http://localhost:3000', 'http://199.7.157.4'];
+	var allowedOrigins = ['http://localhost:3000', 'http://jlive.me'];
 	var origin = req.headers.origin;
+	console.log("host is: " + req.host);
+
 	if(allowedOrigins.indexOf(origin) > -1) {
-    console.log("host is: " + req.host);
 		res.setHeader('Access-Control-Allow-Origin', origin);
 	}
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+	res.header("Access-Control-Allow-Methods", "GET, PUT, POST", "DELETE");
 	return next();
 });
 //set up static server to server any uploaded images
