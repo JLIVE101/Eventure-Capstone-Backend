@@ -28,7 +28,7 @@ app.set('port', port);
 
 // allow cross origin requests
 app.all("*", function (req, res, next) {
-	var allowedOrigins = ['http://localhost:3000', 'http://jlive.me'];
+	var allowedOrigins = ['http://localhost:3000', 'http://jlive.me', 'http://67.205.153.9'];
 	var origin = req.headers.origin;
 	console.log("host is: " + req.host);
 

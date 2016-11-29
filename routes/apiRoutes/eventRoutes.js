@@ -29,6 +29,15 @@ module.exports = function(router) {
         qb.where('user_id', '=', req.query.user_id);
       if(req.query.limitTo)
         qb.limit(req.query.limitTo);
+      if(req.query.start_date && req.query.end_date) {
+        qb.where('start_date', '>=', new Date(req.query.start_date))
+        .andWhere('start_date', '<=', new Date(req.query.end_date));
+
+        qb.orWhere('end_date', '>', new Date(req.query.end_date))
+        .andWhere('start_date', '<', new Date(req.query.start_date));
+      } else {
+        qb.where('end_date', '>=', new Date());
+      }
       qb.orderBy('start_date','DESC');
     })
     .fetch({withRelated: [{'categories': function (qb) {
@@ -89,7 +98,7 @@ module.exports = function(router) {
       longitude       : req.body.longitude || "",
       private         : req.body.private || false,
       password        : (req.body.password) ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : null,
-      picture_url     : req.body.picture_url || null,
+      picture_url     : req.body.picture_url || "http://67.205.153.9:9000/uploads/default.jpg",
       address         : req.body.address || null,
       saved           : req.body.saved || false,
     })
@@ -179,9 +188,6 @@ module.exports = function(router) {
       //if the user isnt the event owner return error
       if(event.get('user_id') !== req.user.id)
         return res.json({success: false, data: "You are not the owner of this event"});
-
-
-
 
       event.destroy().then(function () {
         res.json({success: true, data: 'Event successfully deleted'});

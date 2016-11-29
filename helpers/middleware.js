@@ -1,6 +1,6 @@
 var jwt          = require('jsonwebtoken');
 var config       = require('../config');
-ACCEPTED_DOMAINS = ["localhost","jlive.me","local.host"];
+ACCEPTED_DOMAINS = ["localhost","jlive.me","local.host", "67.205.153.9"];
 
 
 module.exports = {

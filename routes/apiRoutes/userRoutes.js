@@ -81,6 +81,7 @@ module.exports = function(router) {
           google_token        : req.body.google_token || user.get('google_token'),
           google_name         : req.body.google_name || user.get('google_name'),
           google_email        : req.body.google_email || user.get('google_email'),
+          profile_pic_url     : req.body.profile_pic_url || user.get('profile_pic_url'),
           primary_account     : req.body.primary_account || user.get('primary_account'),
         })
         .then(function () {
