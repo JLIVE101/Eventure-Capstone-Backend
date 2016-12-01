@@ -152,6 +152,7 @@ module.exports = function(router) {
       if(event.get('user_id') !== req.user.id)
         return res.json({success: false, data: "You are not the owner of this event"});
 
+
       event.save({
         name            : req.body.name || event.get('name'),
         html_description: req.body.description || event.get('html_description'),
@@ -163,7 +164,7 @@ module.exports = function(router) {
         latitude        : req.body.latitude || event.get('latitude'),
         longitude       : req.body.longitude || event.get('longitude'),
         saved           : req.body.saved || event.get('saved'),
-        private         : req.body.private || event.get('private'),
+        private         : (req.body.private) ? 1 : 0,
       })
       .then(function () {
         res.json({success: true, data: 'Event updated'});
@@ -336,6 +337,7 @@ module.exports = function(router) {
     //add category to event
     router.route('/events/:id/categories/add')
       .post([mw.isLoggedIn], function (req, res) {
+        //return res.send(req.params.id);
         Event.forge({id: req.params.id})
           .fetch({withRelated: [{'categories': function (qb) {
 
@@ -343,13 +345,12 @@ module.exports = function(router) {
 
           }}]})
           .then(function (event) {
-
             //if event isn't found
             if(!event)
               return res.status(404).json({success: false, message: "Event not found"});
 
             //if user is the owner of the event
-            if(event.get('user_id') != req.decoded.id)
+            if(event.get('user_id') != req.user.id)
               return res.status(500).json({success: false, message: "You are not the owner of this event"});
 
             //if selected category is found for that event
@@ -362,11 +363,11 @@ module.exports = function(router) {
               return res.json({success: true, data: "Added category to " + event.get('name')});
             })
             .catch(function (err) {
-              res.status(500).json({success: false, message: err.message});
+              res.status(500).json({success: false, message: err.message + " wtf "});
             });
           })
           .catch(function (err) {
-            res.status(500).json({success: false, message: err.message});
+            res.status(500).json({success: false, message: err.message + " wtf too"});
           });
       });
 

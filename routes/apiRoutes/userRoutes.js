@@ -63,7 +63,7 @@ module.exports = function(router) {
       .then(function (user) {
         user.save({
           gender              : req.body.gender || user.get('gender'),
-          age                 : req.body.date_of_birth || user.get('date_of_birth'),
+          date_of_birth       : (req.body.date_of_birth) ? new Date(req.body.date_of_birth) : user.get('date_of_birth'),
           email               : req.body.email || user.get('email'),
           username            : req.body.username || user.get('username'),
           first_name          : req.body.first_name || user.get('first_name'),
@@ -145,7 +145,6 @@ module.exports = function(router) {
   })
   //add favorited categories to specified user
   .post(function (req, res) {
-    req.body.categories = req.body.categories.split(",");
     //if no categories are found in the request body
     if((req.body.categories && req.body.categories.length <= 0) || !req.body.categories)
       return res.json({success: false, message: "No Categories selected"});
