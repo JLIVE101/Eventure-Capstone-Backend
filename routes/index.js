@@ -95,8 +95,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
 }));
 
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-	successRedirect: 'http://localhost:3000/#/',
-	failureRedirect: 'http://localhost:3000/#/#login-modal'
+	successRedirect: 'http://localhost:3000/profile',
+	failureRedirect: 'http://localhost:3000/#login-modal'
 }));
 
 
