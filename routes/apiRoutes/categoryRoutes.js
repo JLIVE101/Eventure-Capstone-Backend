@@ -90,10 +90,20 @@ module.exports = function(router) {
   router.route("/categories/:id/events")
     .get(function (req, res) {
       Category.forge({id: req.params.id})
-      .fetch({require: true, withRelated: 'events'})
-      .then(function (category) {
-        if(category.related) {
-         return res.json({success: true, data: category.related('events')});
+      .fetch({require: true, withRelated: [{'events': function (qb) {
+        if(req.query.start_date && req.query.end_date) {
+          qb.where('start_date', '>=', new Date(req.query.start_date))
+          .andWhere('start_date', '<=', new Date(req.query.end_date));
+
+          qb.orWhere('end_date', '>', new Date(req.query.end_date))
+          .andWhere('start_date', '<', new Date(req.query.start_date));
+        } else {
+          qb.where('end_date', '>=', new Date());
+        }
+      }}]})
+      .then(function (categories) {
+        if(categories && categories.related) {
+         return res.json({success: true, data: categories.toJSON()});
        }
        return res.json({success: true, data: []});
       })
