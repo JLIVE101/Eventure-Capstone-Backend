@@ -132,13 +132,13 @@ module.exports = function(router) {
       .then(function( user ){
 
         if(!user.related && user.related('categories').length === 0)
-          return res.json({success: true, data: []});
+          return res.status(500).json({success: false, message: "no categories found for this user, update profile settings"});
+
 
         user.related('categories').fetch({withRelated: ['events']})
-        .then(function (event) {
-          var events = [];
+        .then(function (categories) {
 
-          var c = event.toJSON();
+          var c = categories.toJSON();
 
           //all event ids
           var ids = [];
@@ -168,8 +168,7 @@ module.exports = function(router) {
             if(evts)
               return res.send({success: true, data: evts});
 
-
-
+            return res.send({success: true, data: []});
           })
           .catch(function (err) {
             res.status(500).json({success: false, message: err.message});
