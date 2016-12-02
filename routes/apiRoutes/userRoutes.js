@@ -57,8 +57,11 @@ module.exports = function(router) {
 
   //update a user
   .put([mw.verifyUser], function (req, res) {
+
+
     User.forge({id: req.params.id})
       .fetch({require: true})
+
 
 
       .then(function (user) {
@@ -123,7 +126,7 @@ module.exports = function(router) {
   //get users categories
   router.route('/users/:id/categories')
   .get( function (req, res) {
-    User.forge("id", req.params.id)
+    User.forge({"id":  req.params.id})
     .query(function (qb) {
       return qb.select('id');
     })

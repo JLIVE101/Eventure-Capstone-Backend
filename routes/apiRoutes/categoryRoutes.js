@@ -5,6 +5,11 @@ var mw         = require('../../helpers/middleware'); //load api middleware func
 var Categories = Bookshelf.Collection.extend({
   model: Category
 });
+var User      = require('../../models/User');
+var Event     = require('../../models/Event');
+var Events     = Bookshelf.Collection.extend({
+  model: Event
+});
 
 // TODO : add documentation for all routes for categoryRoutes
 
@@ -111,4 +116,73 @@ module.exports = function(router) {
         res.status(500).json({success: false, message: err.message});
       });
     });
+
+    router.route("/interests/categories/events")
+    .get(mw.isLoggedIn, function (req, res) {
+
+      User.forge({"id": req.user.id})
+      .query(function (qb) {
+        return qb.select('id');
+      })
+      .fetch({ withRelated: [{'categories': function(qb){
+          if(req.query.name)
+            qb.where('name', 'like', '%' + req.query.name + '%');
+        }
+      }]})
+      .then(function( user ){
+
+        if(!user.related && user.related('categories').length === 0)
+          return res.json({success: true, data: []});
+
+        user.related('categories').fetch({withRelated: ['events']})
+        .then(function (event) {
+          var events = [];
+
+          var c = event.toJSON();
+
+          //all event ids
+          var ids = [];
+
+          for(var i in c) {
+            for(var y in c[i].events) {
+              ids.push(c[i].events[y].id);
+            }
+          }
+
+
+          Events.query(function (qb) {
+            qb.where("id", "in", ids);
+            if(req.query.start_date && req.query.end_date) {
+              qb.where('start_date', '>=', new Date(req.query.start_date))
+              .andWhere('start_date', '<=', new Date(req.query.end_date));
+
+              qb.orWhere('end_date', '>', new Date(req.query.end_date))
+              .andWhere('start_date', '<', new Date(req.query.start_date));
+            } else {
+              qb.where('end_date', '>=', new Date());
+            }
+          })
+          .fetch({withRelated: ['users','categories']})
+          .then(function (evts) {
+            //push event into events array
+            if(evts)
+              return res.send({success: true, data: evts});
+
+
+
+          })
+          .catch(function (err) {
+            res.status(500).json({success: false, message: err.message});
+
+          });
+        })
+        .catch(function (err) {
+          res.status(500).json({success: false, message: err.message});
+
+        });
+
+    }).catch(function (err) {
+      res.status(500).json({success: false, message: err.message});
+    });
+  });
 };
