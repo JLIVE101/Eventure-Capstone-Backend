@@ -146,12 +146,14 @@ module.exports = function(router) {
   //update event by id
   .put([mw.isLoggedIn], function(req, res) {
     Event.forge({id: req.params.id})
-    .fetch({require: true})
+    .fetch({require: true, withRelated: ['categories']})
     .then(function (event) {
       //if the user isnt the event owner return error
       if(event.get('user_id') !== req.user.id)
         return res.json({success: false, data: "You are not the owner of this event"});
 
+      //delete all event categories
+      event.categories().detach();
 
       event.save({
         name            : req.body.name || event.get('name'),
@@ -166,10 +168,11 @@ module.exports = function(router) {
         saved           : req.body.saved || event.get('saved'),
         private         : (req.body.private) ? 1 : 0,
       })
-      .then(function () {
-        res.json({success: true, data: 'Event updated'});
+      .then(function (event) {
+        event.categories().attach(req.body.categories);
+        return res.json({success: true, data: 'Event updated'});
       })
-      .catch(function (err) {
+      .catch(function(err){
         res.status(500).json({success: false, message: err.message});
       });
     })
