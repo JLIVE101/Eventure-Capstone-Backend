@@ -152,8 +152,8 @@ module.exports = function(router) {
   //add favorited categories to specified user
   .post(function (req, res) {
     //if no categories are found in the request body
-    if((req.body.categories && req.body.categories.length <= 0) || !req.body.categories)
-      return res.json({success: false, message: "No Categories selected"});
+    if(!req.body.categories)
+      return res.status(404).json({success: false, message: "Cannot find categories object"});
 
 
     User.forge({id: req.params.id})
