@@ -163,17 +163,25 @@ module.exports = function(router) {
         if(!user)
           return res.status(404).json({success: false, message: "User not found"});
 
-        //delete all user categories
-        user.categories().detach();
-        //else add categories to list
-        user.save().then(function (user) {
 
-          user.categories().attach(req.body.categories);
-          return res.json({success: true, data: "Saved categories!!"});
-        })
-        .catch(function(err){
-          res.status(500).json({success: false, message: err.message});
-        });
+
+
+        if(req.body.categories && req.body.categories.length > 0) {
+          //delete all user categories
+          user.categories().detach();
+          //and then add categories to list
+          user.save().then(function (user) {
+
+            user.categories().attach(req.body.categories);
+            return res.json({success: true, data: "Saved categories!!"});
+          })
+          .catch(function(err){
+            res.status(500).json({success: false, message: err.message});
+          });
+        } else {
+          //delete all user categories
+          user.categories().detach();
+        }
       })
       .catch(function(err){
         res.status(500).json({success: false, message: err.message});
