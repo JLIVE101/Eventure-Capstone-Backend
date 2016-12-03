@@ -181,6 +181,12 @@ module.exports = function(router) {
         } else {
           //delete all user categories
           user.categories().detach();
+          user.save().then(function (user) {
+            return res.json({success: true, data: "Cleared your categories"});
+          })
+          .catch(function(err){
+            res.status(500).json({success: false, message: err.message});
+          });
         }
       })
       .catch(function(err){
