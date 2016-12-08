@@ -39,6 +39,7 @@ module.exports = function(router) {
       if(!user)
         return res.status(404).json({success:false, message: "User not found for id: " + req.params.id});
 
+
       //convert user into JSON
       var newUser = user;
 
@@ -56,14 +57,17 @@ module.exports = function(router) {
 
   //update a user
   .put([mw.verifyUser], function (req, res) {
+
+
     User.forge({id: req.params.id})
       .fetch({require: true})
+
 
 
       .then(function (user) {
         user.save({
           gender              : req.body.gender || user.get('gender'),
-          age                 : req.body.date_of_birth || user.get('date_of_birth'),
+          date_of_birth       : (req.body.date_of_birth) ? new Date(req.body.date_of_birth) : user.get('date_of_birth'),
           email               : req.body.email || user.get('email'),
           username            : req.body.username || user.get('username'),
           first_name          : req.body.first_name || user.get('first_name'),
@@ -81,9 +85,12 @@ module.exports = function(router) {
           google_token        : req.body.google_token || user.get('google_token'),
           google_name         : req.body.google_name || user.get('google_name'),
           google_email        : req.body.google_email || user.get('google_email'),
+          profile_pic_url     : req.body.profile_pic_url || user.get('profile_pic_url'),
           primary_account     : req.body.primary_account || user.get('primary_account'),
         })
-        .then(function () {
+        .then(function (u) {
+
+          console.log(u);
           res.json({success: true, data: "User updated"});
 
 
@@ -119,7 +126,7 @@ module.exports = function(router) {
   //get users categories
   router.route('/users/:id/categories')
   .get( function (req, res) {
-    User.forge("id", req.params.id)
+    User.forge({"id":  req.params.id})
     .query(function (qb) {
       return qb.select('id');
     })
@@ -144,34 +151,43 @@ module.exports = function(router) {
   })
   //add favorited categories to specified user
   .post(function (req, res) {
-    req.body.categories = req.body.categories.split(",");
     //if no categories are found in the request body
-    if((req.body.categories && req.body.categories.length <= 0) || !req.body.categories)
-      return res.json({success: false, message: "No Categories selected"});
+    if(!req.body.categories)
+      return res.status(404).json({success: false, message: "Cannot find categories object"});
 
 
     User.forge({id: req.params.id})
-      .fetch({withRelated: [{'categories': function (qb) {
-        qb.where("category_id","in", req.body.categories);
-      }}]})
+      .fetch({withRelated: ['categories']})
       .then(function (user) {
         //if no user found
         if(!user)
           return res.status(404).json({success: false, message: "User not found"});
 
-        //if categories found then user already has one of the listed categories inside
-        if(user.related && user.related('categories').length > 0)
-          return res.status(500).json({success: false, message: "You already have one of the categories listed"});
 
-        //else add categories to list
-        user.save().then(function (user) {
 
-          user.categories().attach(req.body.categories);
-          return res.json({success: true, data: "Saved categories!!"});
-        })
-        .catch(function(err){
-          res.status(500).json({success: false, message: err.message});
-        });
+
+        if(req.body.categories && req.body.categories.length > 0) {
+          //delete all user categories
+          user.categories().detach();
+          //and then add categories to list
+          user.save().then(function (user) {
+
+            user.categories().attach(req.body.categories);
+            return res.json({success: true, data: "Saved categories!!"});
+          })
+          .catch(function(err){
+            res.status(500).json({success: false, message: err.message});
+          });
+        } else {
+          //delete all user categories
+          user.categories().detach();
+          user.save().then(function (user) {
+            return res.json({success: true, data: "Cleared your categories"});
+          })
+          .catch(function(err){
+            res.status(500).json({success: false, message: err.message});
+          });
+        }
       })
       .catch(function(err){
         res.status(500).json({success: false, message: err.message});

@@ -1,4 +1,6 @@
 var Bookshelf  = require('../../database').getBookShelf();
+var cascadeDelete = require('bookshelf-cascade-delete');
+Bookshelf.plugin(cascadeDelete);
 Bookshelf.plugin('registry');
 var bcrypt     = require('bcrypt-nodejs');
 var Event      = require('../../models/Event');
@@ -27,6 +29,15 @@ module.exports = function(router) {
         qb.where('user_id', '=', req.query.user_id);
       if(req.query.limitTo)
         qb.limit(req.query.limitTo);
+      if(req.query.start_date && req.query.end_date) {
+        qb.where('start_date', '>=', new Date(req.query.start_date))
+        .andWhere('start_date', '<=', new Date(req.query.end_date));
+
+        qb.orWhere('end_date', '>', new Date(req.query.end_date))
+        .andWhere('start_date', '<', new Date(req.query.start_date));
+      } else {
+        qb.where('end_date', '>=', new Date());
+      }
       qb.orderBy('start_date','DESC');
     })
     .fetch({withRelated: [{'categories': function (qb) {
@@ -87,7 +98,7 @@ module.exports = function(router) {
       longitude       : req.body.longitude || "",
       private         : req.body.private || false,
       password        : (req.body.password) ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : null,
-      picture_url     : req.body.picture_url || null,
+      picture_url     : req.body.picture_url || "http://67.205.153.9:9000/uploads/default.jpg",
       address         : req.body.address || null,
       saved           : req.body.saved || false,
     })
@@ -135,11 +146,14 @@ module.exports = function(router) {
   //update event by id
   .put([mw.isLoggedIn], function(req, res) {
     Event.forge({id: req.params.id})
-    .fetch({require: true})
+    .fetch({require: true, withRelated: ['categories']})
     .then(function (event) {
       //if the user isnt the event owner return error
       if(event.get('user_id') !== req.user.id)
         return res.json({success: false, data: "You are not the owner of this event"});
+
+      //delete all event categories
+      event.categories().detach();
 
       event.save({
         name            : req.body.name || event.get('name'),
@@ -152,12 +166,13 @@ module.exports = function(router) {
         latitude        : req.body.latitude || event.get('latitude'),
         longitude       : req.body.longitude || event.get('longitude'),
         saved           : req.body.saved || event.get('saved'),
-        private         : req.body.private || event.get('private'),
+        private         : (req.body.private) ? 1 : 0,
       })
-      .then(function () {
-        res.json({success: true, data: 'Event updated'});
+      .then(function (event) {
+        event.categories().attach(req.body.categories);
+        return res.json({success: true, data: 'Event updated'});
       })
-      .catch(function (err) {
+      .catch(function(err){
         res.status(500).json({success: false, message: err.message});
       });
     })
@@ -172,7 +187,7 @@ module.exports = function(router) {
   //delete an event by id
   .delete([mw.isLoggedIn], function (req, res) {
     Event.forge({id: req.params.id})
-    .fetch({require: true})
+    .fetch({require: true, withRelated: ['categories','users','ratings','comments']})
     .then(function (event) {
       //if the user isnt the event owner return error
       if(event.get('user_id') !== req.user.id)
@@ -182,11 +197,11 @@ module.exports = function(router) {
         res.json({success: true, data: 'Event successfully deleted'});
       })
       .catch(function (err) {
-        res.status(500).json({success: false, message: err.message});
+        res.status(500).json({success: false, message: err});
       });
     })
     .catch(function (err) {
-      res.status(500).json({success: false, message: err.message});
+      res.status(500).json({success: false, message: err});
     });
   });
 
@@ -325,6 +340,7 @@ module.exports = function(router) {
     //add category to event
     router.route('/events/:id/categories/add')
       .post([mw.isLoggedIn], function (req, res) {
+        //return res.send(req.params.id);
         Event.forge({id: req.params.id})
           .fetch({withRelated: [{'categories': function (qb) {
 
@@ -332,13 +348,12 @@ module.exports = function(router) {
 
           }}]})
           .then(function (event) {
-
             //if event isn't found
             if(!event)
               return res.status(404).json({success: false, message: "Event not found"});
 
             //if user is the owner of the event
-            if(event.get('user_id') != req.decoded.id)
+            if(event.get('user_id') != req.user.id)
               return res.status(500).json({success: false, message: "You are not the owner of this event"});
 
             //if selected category is found for that event
@@ -351,11 +366,11 @@ module.exports = function(router) {
               return res.json({success: true, data: "Added category to " + event.get('name')});
             })
             .catch(function (err) {
-              res.status(500).json({success: false, message: err.message});
+              res.status(500).json({success: false, message: err.message + " wtf "});
             });
           })
           .catch(function (err) {
-            res.status(500).json({success: false, message: err.message});
+            res.status(500).json({success: false, message: err.message + " wtf too"});
           });
       });
 
